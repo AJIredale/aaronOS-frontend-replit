@@ -201,7 +201,7 @@ export default function Sidebar() {
               <DialogHeader>
                 <DialogTitle>Profile & Settings</DialogTitle>
               </DialogHeader>
-              <div className="flex h-full">
+              <div className="flex h-full items-start">
                 {/* Settings Sidebar */}
                 <div className="w-48 pr-6 border-r border-gray-200">
                   <div className="space-y-1">
@@ -251,7 +251,7 @@ export default function Sidebar() {
                 {/* Settings Content */}
                 <div className="flex-1 pl-6 overflow-y-auto">
                   {activeTab === "account" && (
-                    <div className="space-y-6 pt-0">
+                    <div className="space-y-6">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Account</h3>
                         <div className="space-y-4">
