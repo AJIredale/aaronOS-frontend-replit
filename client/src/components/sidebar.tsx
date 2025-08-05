@@ -174,6 +174,29 @@ export default function Sidebar() {
           ))}
         </div>
       </div>
+
+      {/* Groups Section */}
+      <div className="px-4 mb-4">
+        <div className="border-t border-gray-700 opacity-30 mb-3"></div>
+        <div className="mb-3">
+          <span className="text-xs text-gray-500 font-medium">Groups</span>
+        </div>
+        <div className="space-y-1">
+          {[
+            { name: "Staff Planning", icon: "👥" },
+            { name: "Operations", icon: "⚙️" },
+            { name: "Website", icon: "🌐" }
+          ].map((group, index) => (
+            <button
+              key={index}
+              className="w-full flex items-center gap-3 py-2 px-3 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)] hover:scale-[1.02]"
+            >
+              <span className="text-sm">{group.icon}</span>
+              <span className="text-sm">{group.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
       
       {/* User Profile */}
       <div className="p-4 border-t border-gray-700">
