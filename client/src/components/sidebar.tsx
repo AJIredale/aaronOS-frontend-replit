@@ -254,17 +254,17 @@ export default function Sidebar() {
         </DropdownMenu>
 
         <Dialog open={showSettings} onOpenChange={setShowSettings}>
-          <DialogContent className="max-w-5xl h-[600px] overflow-hidden">
-              <DialogHeader>
+          <DialogContent className="max-w-5xl h-[600px] overflow-hidden p-0">
+              <DialogHeader className="px-6 pt-6 pb-4">
                 <DialogTitle>Profile & Settings</DialogTitle>
               </DialogHeader>
-              <div className="flex h-full items-start">
+              <div className="flex h-full">
                 {/* Settings Sidebar */}
-                <div className="w-48 pr-6 border-r border-gray-200">
+                <div className="w-48 px-6 border-r border-gray-200 flex-shrink-0">
                   <div className="space-y-1">
                     <button 
                       onClick={() => setActiveTab("account")}
-                      className={`w-full text-left px-3 py-2 text-sm font-medium rounded-lg ${
+                      className={`w-full text-left px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
                         activeTab === "account" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                       }`}
                     >
@@ -272,7 +272,7 @@ export default function Sidebar() {
                     </button>
                     <button 
                       onClick={() => setActiveTab("settings")}
-                      className={`w-full text-left px-3 py-2 text-sm rounded-lg ${
+                      className={`w-full text-left px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
                         activeTab === "settings" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                       }`}
                     >
@@ -280,7 +280,7 @@ export default function Sidebar() {
                     </button>
                     <button 
                       onClick={() => setActiveTab("usage")}
-                      className={`w-full text-left px-3 py-2 text-sm rounded-lg ${
+                      className={`w-full text-left px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
                         activeTab === "usage" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                       }`}
                     >
@@ -288,7 +288,7 @@ export default function Sidebar() {
                     </button>
                     <button 
                       onClick={() => setActiveTab("connected")}
-                      className={`w-full text-left px-3 py-2 text-sm rounded-lg ${
+                      className={`w-full text-left px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
                         activeTab === "connected" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                       }`}
                     >
@@ -296,7 +296,7 @@ export default function Sidebar() {
                     </button>
                     <button 
                       onClick={() => setActiveTab("help")}
-                      className={`w-full text-left px-3 py-2 text-sm rounded-lg ${
+                      className={`w-full text-left px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
                         activeTab === "help" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                       }`}
                     >
@@ -306,11 +306,11 @@ export default function Sidebar() {
                 </div>
 
                 {/* Settings Content */}
-                <div className="flex-1 pl-6 overflow-y-auto flex flex-col">
-                  {activeTab === "account" && (
-                    <div className="space-y-6 flex-1" style={{ alignSelf: 'flex-start', width: '100%' }}>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Account</h3>
+                <div className="flex-1 overflow-hidden" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div className="flex-1 overflow-y-auto px-6" style={{ alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    {activeTab === "account" && (
+                      <div className="py-2">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-6">Account</h3>
                         <div className="space-y-4">
                           <div className="flex items-center gap-4">
                             <div className="w-16 h-16 bg-[var(--aaron-dark)] rounded-full flex items-center justify-center">
@@ -340,13 +340,11 @@ export default function Sidebar() {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {activeTab === "settings" && (
-                    <div className="space-y-6 flex-1" style={{ alignSelf: 'flex-start', width: '100%' }}>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Settings</h3>
+                    {activeTab === "settings" && (
+                      <div className="py-2">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-6">Settings</h3>
                         <div className="space-y-4">
                           <div className="flex items-center justify-between">
                             <div>
@@ -371,13 +369,11 @@ export default function Sidebar() {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {activeTab === "usage" && (
-                    <div className="space-y-6 flex-1" style={{ alignSelf: 'flex-start', width: '100%' }}>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Usage & Credits</h3>
+                    {activeTab === "usage" && (
+                      <div className="py-2">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-6">Usage & Credits</h3>
                         <div className="bg-gray-50 rounded-lg p-4">
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm text-gray-600">Monthly Credits</span>
@@ -404,13 +400,11 @@ export default function Sidebar() {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {activeTab === "connected" && (
-                    <div className="space-y-6 flex-1" style={{ alignSelf: 'flex-start', width: '100%' }}>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Connected apps</h3>
+                    {activeTab === "connected" && (
+                      <div className="py-2">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-6">Connected apps</h3>
                         
                         {/* Search bar */}
                         <div className="mb-6">
@@ -534,13 +528,11 @@ export default function Sidebar() {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {activeTab === "help" && (
-                    <div className="space-y-6 flex-1" style={{ alignSelf: 'flex-start', width: '100%' }}>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Help & Support</h3>
+                    {activeTab === "help" && (
+                      <div className="py-2">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-6">Help & Support</h3>
                         <div className="space-y-2">
                           <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                             <div className="font-medium text-sm">Documentation</div>
@@ -560,8 +552,8 @@ export default function Sidebar() {
                           </button>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             </DialogContent>
