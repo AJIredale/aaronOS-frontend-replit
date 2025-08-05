@@ -99,7 +99,7 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation Options */}
-      <div className="px-4 py-3 space-y-2">
+      <div className="px-4 py-3 space-y-1">
         <button 
           onClick={handleNewChat}
           className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-colors rounded-lg"
