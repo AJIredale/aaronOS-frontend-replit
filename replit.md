@@ -17,6 +17,7 @@ Preferred communication style: Simple, everyday language.
 - **State Management**: Zustand for conversation state and React Context for global state management
 - **Routing**: Wouter for lightweight client-side routing
 - **Data Fetching**: TanStack React Query for server state management with caching and real-time updates
+- **Voice Input**: Web Speech Recognition API integration for hands-free interaction
 
 ### Backend Integration
 - **API Communication**: RESTful API endpoints for agent status, messaging, memory management, and task operations
@@ -30,6 +31,7 @@ Preferred communication style: Simple, everyday language.
 - **Modular Design**: Separated components for ChatPanel, CommandBar, MemoryPanel, ActivityPanel, and AgentStatus
 - **Layout System**: Three-panel layout with sidebar navigation, main chat area, and activity panel
 - **Command Interface**: Slash-command system with autocomplete for power-user interactions
+- **Voice Integration**: Microphone button with visual feedback for voice-to-text input in both chat and overlay
 - **Responsive Design**: Mobile-first approach with desktop optimizations
 
 ### Data Flow

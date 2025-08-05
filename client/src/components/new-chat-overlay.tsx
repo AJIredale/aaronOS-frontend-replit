@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Mic, Sparkles } from "lucide-react";
+import { Send, Mic, MicOff, Sparkles } from "lucide-react";
+import { useVoiceInput } from "@/hooks/use-voice-input";
 
 interface NewChatOverlayProps {
   onStartChat: (message: string) => void;
@@ -10,6 +11,23 @@ interface NewChatOverlayProps {
 
 export default function NewChatOverlay({ onStartChat, onClose }: NewChatOverlayProps) {
   const [input, setInput] = useState("");
+
+  // Voice input integration
+  const { isListening, isSupported, transcript, toggleListening } = useVoiceInput({
+    onTranscript: (voiceText) => {
+      setInput(prev => prev + voiceText + ' ');
+    },
+    onError: (error) => {
+      console.error('Voice input error:', error);
+    }
+  });
+
+  // Update input with voice transcript
+  useEffect(() => {
+    if (transcript) {
+      setInput(prev => prev + transcript);
+    }
+  }, [transcript]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,14 +78,21 @@ export default function NewChatOverlay({ onStartChat, onClose }: NewChatOverlayP
               </div>
               
               <div className="flex items-center gap-2">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 text-gray-500 hover:text-gray-700 hover:bg-gray-100"
-                >
-                  <Mic size={16} />
-                </Button>
+                {isSupported && (
+                  <Button
+                    type="button"
+                    onClick={toggleListening}
+                    variant="ghost"
+                    size="sm"
+                    className={`h-8 w-8 p-0 transition-colors ${
+                      isListening 
+                        ? "bg-red-500 hover:bg-red-600 text-white" 
+                        : "text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                  </Button>
+                )}
                 <Button
                   type="button"
                   variant="ghost"

@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { apiRequest } from "@/lib/api";
 import { useConversationStore } from "@/store/conversation";
-import { Send, Plus, Paperclip, FileText, Image, Code, Database } from "lucide-react";
+import { Send, Plus, Paperclip, FileText, Image, Code, Database, Mic, MicOff } from "lucide-react";
+import { useVoiceInput } from "@/hooks/use-voice-input";
 
 const SLASH_COMMANDS = [
   { command: "/clear", description: "Clear conversation" },
@@ -19,6 +20,17 @@ export default function CommandBar() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const queryClient = useQueryClient();
   const { addMessage, setTyping } = useConversationStore();
+
+  // Voice input integration
+  const { isListening, isSupported, transcript, toggleListening } = useVoiceInput({
+    onTranscript: (voiceText) => {
+      setInput(prev => prev + voiceText + ' ');
+      textareaRef.current?.focus();
+    },
+    onError: (error) => {
+      console.error('Voice input error:', error);
+    }
+  });
 
   const sendMessageMutation = useMutation({
     mutationFn: async (content: string) => {
@@ -137,6 +149,13 @@ export default function CommandBar() {
     cmd.command.toLowerCase().includes(input.toLowerCase())
   );
 
+  // Update input with voice transcript
+  useEffect(() => {
+    if (transcript) {
+      setInput(prev => prev + transcript);
+    }
+  }, [transcript]);
+
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
@@ -214,18 +233,36 @@ export default function CommandBar() {
                 />
               </div>
               
-              <Button
-                type="submit"
-                size="sm"
-                className={`ml-3 h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 ${
-                  input.trim() 
-                    ? "bg-black hover:bg-gray-800 text-white" 
-                    : "bg-gray-300 hover:bg-gray-400 text-white"
-                }`}
-                disabled={!input.trim() || sendMessageMutation.isPending}
-              >
-                <Send size={16} />
-              </Button>
+              <div className="flex items-center gap-2 ml-3">
+                {isSupported && (
+                  <Button
+                    type="button"
+                    onClick={toggleListening}
+                    size="sm"
+                    variant="ghost"
+                    className={`h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 ${
+                      isListening 
+                        ? "bg-red-500 hover:bg-red-600 text-white" 
+                        : "hover:bg-gray-100 text-gray-500"
+                    }`}
+                  >
+                    {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                  </Button>
+                )}
+                
+                <Button
+                  type="submit"
+                  size="sm"
+                  className={`h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 ${
+                    input.trim() 
+                      ? "bg-black hover:bg-gray-800 text-white" 
+                      : "bg-gray-300 hover:bg-gray-400 text-white"
+                  }`}
+                  disabled={!input.trim() || sendMessageMutation.isPending}
+                >
+                  <Send size={16} />
+                </Button>
+              </div>
             </div>
           </div>
         </form>
