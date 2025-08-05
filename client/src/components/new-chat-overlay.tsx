@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Mic, MicOff, Sparkles } from "lucide-react";
+import { Send, Mic, MicOff, Sparkles, Square } from "lucide-react";
 import { useVoiceInput } from "@/hooks/use-voice-input";
+import { useVoiceRecording } from "@/hooks/use-voice-recording";
 
 interface NewChatOverlayProps {
   onStartChat: (message: string) => void;
@@ -13,12 +14,23 @@ export default function NewChatOverlay({ onStartChat, onClose }: NewChatOverlayP
   const [input, setInput] = useState("");
 
   // Voice input integration
-  const { isListening, isSupported, transcript, toggleListening } = useVoiceInput({
+  const { isListening, isSupported: voiceSupported, transcript, toggleListening } = useVoiceInput({
     onTranscript: (voiceText) => {
       setInput(prev => prev + voiceText + ' ');
     },
     onError: (error) => {
       console.error('Voice input error:', error);
+    }
+  });
+
+  // Voice recording integration
+  const { isRecording, isSupported: recordingSupported, toggleRecording } = useVoiceRecording({
+    onRecordingComplete: (audioBlob) => {
+      console.log('Voice recording completed:', audioBlob);
+      // TODO: Send voice note to backend
+    },
+    onError: (error) => {
+      console.error('Voice recording error:', error);
     }
   });
 
@@ -78,7 +90,7 @@ export default function NewChatOverlay({ onStartChat, onClose }: NewChatOverlayP
               </div>
               
               <div className="flex items-center gap-2">
-                {isSupported && (
+                {voiceSupported && (
                   <Button
                     type="button"
                     onClick={toggleListening}
@@ -93,6 +105,43 @@ export default function NewChatOverlay({ onStartChat, onClose }: NewChatOverlayP
                     {isListening ? <MicOff size={16} /> : <Mic size={16} />}
                   </Button>
                 )}
+                
+                {/* Dynamic send/voice button like GPT */}
+                {input.trim() ? (
+                  <Button
+                    type="submit"
+                    size="sm"
+                    className="h-8 w-8 p-0 rounded-full bg-black hover:bg-gray-800 text-white"
+                  >
+                    <Send size={16} />
+                  </Button>
+                ) : (
+                  recordingSupported && (
+                    <Button
+                      type="button"
+                      onClick={toggleRecording}
+                      variant="ghost"
+                      size="sm"
+                      className={`h-8 w-8 p-0 rounded-full transition-colors ${
+                        isRecording 
+                          ? "bg-red-500 hover:bg-red-600 text-white" 
+                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                      }`}
+                    >
+                      {isRecording ? (
+                        <Square size={12} />
+                      ) : (
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                          <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
+                          <path d="M12 18v4"/>
+                          <path d="M8 22h8"/>
+                        </svg>
+                      )}
+                    </Button>
+                  )
+                )}
+                
                 <Button
                   type="button"
                   variant="ghost"

@@ -31,7 +31,7 @@ Preferred communication style: Simple, everyday language.
 - **Modular Design**: Separated components for ChatPanel, CommandBar, MemoryPanel, ActivityPanel, and AgentStatus
 - **Layout System**: Three-panel layout with sidebar navigation, main chat area, and activity panel
 - **Command Interface**: Slash-command system with autocomplete for power-user interactions
-- **Voice Integration**: Microphone button with visual feedback for voice-to-text input in both chat and overlay
+- **Voice Integration**: Dual voice functionality with microphone button for voice-to-text transcription and dynamic send/voice-note button that switches based on input state (like GPT)
 - **Responsive Design**: Mobile-first approach with desktop optimizations
 
 ### Data Flow

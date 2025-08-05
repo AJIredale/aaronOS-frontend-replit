@@ -5,8 +5,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { apiRequest } from "@/lib/api";
 import { useConversationStore } from "@/store/conversation";
-import { Send, Plus, Paperclip, FileText, Image, Code, Database, Mic, MicOff } from "lucide-react";
+import { Send, Plus, Paperclip, FileText, Image, Code, Database, Mic, MicOff, Square } from "lucide-react";
 import { useVoiceInput } from "@/hooks/use-voice-input";
+import { useVoiceRecording } from "@/hooks/use-voice-recording";
 
 const SLASH_COMMANDS = [
   { command: "/clear", description: "Clear conversation" },
@@ -22,13 +23,25 @@ export default function CommandBar() {
   const { addMessage, setTyping } = useConversationStore();
 
   // Voice input integration
-  const { isListening, isSupported, transcript, toggleListening } = useVoiceInput({
+  const { isListening, isSupported: voiceSupported, transcript, toggleListening } = useVoiceInput({
     onTranscript: (voiceText) => {
       setInput(prev => prev + voiceText + ' ');
       textareaRef.current?.focus();
     },
     onError: (error) => {
       console.error('Voice input error:', error);
+    }
+  });
+
+  // Voice recording integration
+  const { isRecording, isSupported: recordingSupported, toggleRecording } = useVoiceRecording({
+    onRecordingComplete: (audioBlob) => {
+      // For now, we'll just log the recording. In a real app, this would be sent to the server
+      console.log('Voice recording completed:', audioBlob);
+      // TODO: Send voice note to backend
+    },
+    onError: (error) => {
+      console.error('Voice recording error:', error);
     }
   });
 
@@ -234,7 +247,7 @@ export default function CommandBar() {
               </div>
               
               <div className="flex items-center gap-2 ml-3">
-                {isSupported && (
+                {voiceSupported && (
                   <Button
                     type="button"
                     onClick={toggleListening}
@@ -250,18 +263,41 @@ export default function CommandBar() {
                   </Button>
                 )}
                 
-                <Button
-                  type="submit"
-                  size="sm"
-                  className={`h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 ${
-                    input.trim() 
-                      ? "bg-black hover:bg-gray-800 text-white" 
-                      : "bg-gray-300 hover:bg-gray-400 text-white"
-                  }`}
-                  disabled={!input.trim() || sendMessageMutation.isPending}
-                >
-                  <Send size={16} />
-                </Button>
+                {/* Dynamic send/voice button like GPT */}
+                {input.trim() ? (
+                  <Button
+                    type="submit"
+                    size="sm"
+                    className="h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 bg-black hover:bg-gray-800 text-white"
+                    disabled={sendMessageMutation.isPending}
+                  >
+                    <Send size={16} />
+                  </Button>
+                ) : (
+                  recordingSupported && (
+                    <Button
+                      type="button"
+                      onClick={toggleRecording}
+                      size="sm"
+                      className={`h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 ${
+                        isRecording 
+                          ? "bg-red-500 hover:bg-red-600 text-white" 
+                          : "bg-gray-200 hover:bg-gray-300 text-gray-600"
+                      }`}
+                    >
+                      {isRecording ? (
+                        <Square size={12} />
+                      ) : (
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                          <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
+                          <path d="M12 18v4"/>
+                          <path d="M8 22h8"/>
+                        </svg>
+                      )}
+                    </Button>
+                  )
+                )}
               </div>
             </div>
           </div>
