@@ -1,6 +1,7 @@
 import AaronIcon from "@/components/aaron-icon";
 import AgentStatus from "@/components/agent-status";
 import { useAgentState } from "@/hooks/use-agent-state";
+import aaronOSLogo from "@assets/aaron OS logo light@4x_1754411225854.png";
 
 export default function Sidebar() {
   const { agentStatus } = useAgentState();
@@ -10,7 +11,12 @@ export default function Sidebar() {
       {/* Logo Section */}
       <div className="p-4 border-b border-gray-700">
         <div className="flex items-center gap-2">
-          <AaronIcon variant="logo" theme="dark" size={20} className="text-white" />
+          <img 
+            src={aaronOSLogo} 
+            alt="AaronOS" 
+            className="h-6 w-auto filter invert"
+            style={{ filter: 'invert(1) brightness(2)' }}
+          />
         </div>
       </div>
 
