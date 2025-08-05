@@ -142,19 +142,18 @@ export default function Sidebar() {
             >
               <button
                 onClick={() => handleChatSelect(chat)}
-                className="flex-1 text-left text-sm text-white font-normal truncate"
-                style={{ padding: '0.4rem' }}
+                className="flex-1 text-left text-sm text-white font-normal truncate py-2 pl-2 pr-1"
               >
                 {chat.title}
               </button>
               
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity pr-2">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity pr-2 flex items-center">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 hover:bg-gray-600"
+                      className="h-6 w-6 p-0 hover:bg-gray-600 flex items-center justify-center"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <MoreHorizontal size={14} className="text-gray-400" />
