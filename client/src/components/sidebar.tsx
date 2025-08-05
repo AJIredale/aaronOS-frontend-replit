@@ -12,6 +12,7 @@ export default function Sidebar() {
   const { agentStatus } = useAgentState();
   const [showSettings, setShowSettings] = useState(false);
   const [activeTab, setActiveTab] = useState("account");
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const { clearMessages, setCurrentConversation } = useConversationStore();
 
   const chatHistory = [
@@ -103,27 +104,17 @@ export default function Sidebar() {
       <div className="px-4 py-3 space-y-1">
         <button 
           onClick={handleNewChat}
-          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-colors rounded-lg"
-          style={{
-            '--hover-bg': 'rgb(37 46 59)'
-          } as any}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgb(37 46 59)'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)] hover:scale-[1.02]"
         >
-          <div className="w-4 h-4 rounded-full border border-current flex items-center justify-center">
+          <div className="w-4 h-4 rounded-full border border-current flex items-center justify-center transition-all duration-200 ease-in-out">
             <Plus size={10} />
           </div>
           <span className="text-sm">New Task</span>
         </button>
         <button 
-          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-colors rounded-lg"
-          style={{
-            '--hover-bg': 'rgb(37 46 59)'
-          } as any}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgb(37 46 59)'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)] hover:scale-[1.02]"
         >
-          <Search size={16} />
+          <Search size={16} className="transition-all duration-200 ease-in-out" />
           <span className="text-sm">Search Chat</span>  
         </button>
       </div>
@@ -134,16 +125,11 @@ export default function Sidebar() {
           {chatHistory.map((chat) => (
             <div
               key={chat.id}
-              className="group flex items-center rounded-lg transition-colors relative"
-              style={{
-                '--hover-bg': 'rgb(37 46 59)'
-              } as any}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgb(37 46 59)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              className="group flex items-center rounded-lg transition-all duration-200 ease-in-out relative hover:bg-[rgb(37,46,59)] hover:scale-[1.01]"
             >
               <button
                 onClick={() => handleChatSelect(chat)}
-                className="flex-1 text-left text-sm text-white font-normal truncate py-2 pl-2 pr-1"
+                className="flex-1 text-left text-sm text-white font-normal truncate py-2 pl-2 pr-1 transition-all duration-200 ease-in-out"
               >
                 {chat.title}
               </button>
@@ -154,10 +140,10 @@ export default function Sidebar() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 hover:bg-gray-600 flex items-center justify-center"
+                      className="h-6 w-6 p-0 hover:bg-gray-600 flex items-center justify-center transition-all duration-200 ease-in-out hover:scale-110"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <MoreHorizontal size={14} className="text-gray-400" />
+                      <MoreHorizontal size={14} className="text-gray-400 transition-all duration-200 ease-in-out" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-40">
@@ -183,11 +169,11 @@ export default function Sidebar() {
       
       {/* User Profile */}
       <div className="p-4 border-t border-gray-700">
-        <DropdownMenu>
+        <DropdownMenu open={userMenuOpen} onOpenChange={setUserMenuOpen}>
           <DropdownMenuTrigger asChild>
             <Button 
               variant="ghost" 
-              className="w-full justify-between gap-3 text-white hover:text-white rounded-lg border-0 px-3"
+              className="w-full justify-between gap-3 text-white hover:text-white rounded-lg border-0 px-3 focus:outline-none focus:ring-0 focus:border-0 transition-all duration-200 ease-in-out hover:bg-opacity-80"
               style={{
                 paddingTop: "1.5rem",
                 paddingBottom: "1.5rem", 
@@ -196,7 +182,7 @@ export default function Sidebar() {
               }}
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center transition-all duration-200 ease-in-out hover:bg-blue-400">
                   <User size={16} className="text-white" />
                 </div>
                 <div className="flex flex-col items-start">
@@ -204,7 +190,15 @@ export default function Sidebar() {
                   <span className="text-xs text-gray-300">user@aaronos.com</span>
                 </div>
               </div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400">
+              <svg 
+                width="16" 
+                height="16" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                className={`text-gray-400 transition-transform duration-200 ease-in-out ${userMenuOpen ? 'rotate-180' : 'rotate-0'}`}
+              >
                 <polyline points="6,9 12,15 18,9"/>
               </svg>
             </Button>
@@ -216,14 +210,14 @@ export default function Sidebar() {
           >
             <DropdownMenuItem 
               onClick={() => setShowSettings(true)}
-              className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer"
+              className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:scale-[1.02]"
             >
-              <Settings size={18} className="text-gray-500" />
+              <Settings size={18} className="text-gray-500 transition-all duration-200 ease-in-out" />
               <span className="text-sm font-medium">Settings</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer">
+            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:scale-[1.02]">
               <div className="w-[18px] h-[18px] flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-500">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-500 transition-all duration-200 ease-in-out">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
                   <line x1="8" y1="21" x2="16" y2="21"/>
                   <line x1="12" y1="17" x2="12" y2="21"/>
@@ -232,9 +226,9 @@ export default function Sidebar() {
               <span className="text-sm font-medium">System</span>
             </DropdownMenuItem>
             <div className="border-t border-gray-200 my-1" />
-            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg cursor-pointer">
+            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:scale-[1.02]">
               <div className="w-[18px] h-[18px] flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-500">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-500 transition-all duration-200 ease-in-out">
                   <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                   <polyline points="16,17 21,12 16,7"/>
                   <line x1="21" y1="12" x2="9" y2="12"/>
