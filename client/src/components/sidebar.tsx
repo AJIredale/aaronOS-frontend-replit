@@ -104,7 +104,7 @@ export default function Sidebar() {
       <div className="px-4 py-2 space-y-1">
         <button 
           onClick={handleNewChat}
-          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)] hover:scale-[1.02]"
+          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)]"
         >
           <div className="w-4 h-4 rounded-full border border-current flex items-center justify-center transition-all duration-200 ease-in-out">
             <Plus size={10} />
@@ -112,7 +112,7 @@ export default function Sidebar() {
           <span className="text-sm">New Task</span>
         </button>
         <button 
-          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)] hover:scale-[1.02]"
+          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)]"
         >
           <Search size={16} className="transition-all duration-200 ease-in-out" />
           <span className="text-sm">Search Chat</span>  
@@ -133,7 +133,7 @@ export default function Sidebar() {
           {chatHistory.map((chat) => (
             <div
               key={chat.id}
-              className="group flex items-center rounded-lg transition-all duration-200 ease-in-out relative hover:bg-[rgb(37,46,59)] hover:scale-[1.01]"
+              className="group flex items-center rounded-lg transition-all duration-200 ease-in-out relative hover:bg-[rgb(37,46,59)]"
             >
               <button
                 onClick={() => handleChatSelect(chat)}
@@ -148,7 +148,7 @@ export default function Sidebar() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 hover:bg-gray-600 flex items-center justify-center transition-all duration-200 ease-in-out hover:scale-110"
+                      className="h-6 w-6 p-0 hover:bg-gray-600 flex items-center justify-center transition-all duration-200 ease-in-out"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <MoreHorizontal size={14} className="text-gray-400 transition-all duration-200 ease-in-out" />
@@ -184,7 +184,7 @@ export default function Sidebar() {
         <div className="border-t border-gray-700 opacity-30 mb-2"></div>
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs text-gray-500 font-medium">Recurring Tasks</span>
-          <button className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center text-gray-500 hover:text-white hover:border-white transition-all duration-200 ease-in-out hover:scale-110">
+          <button className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center text-gray-500 hover:text-white hover:border-white transition-all duration-200 ease-in-out">
             <Plus size={10} />
           </button>
         </div>
@@ -196,7 +196,7 @@ export default function Sidebar() {
           ].map((group, index) => (
             <div
               key={index}
-              className="group flex items-center rounded-lg transition-all duration-200 ease-in-out relative hover:bg-[rgb(37,46,59)] hover:scale-[1.01]"
+              className="group flex items-center rounded-lg transition-all duration-200 ease-in-out relative hover:bg-[rgb(37,46,59)]"
             >
               <button
                 className="flex-1 text-left text-sm text-white font-normal truncate py-2 pl-2 pr-1 transition-all duration-200 ease-in-out"
@@ -210,7 +210,7 @@ export default function Sidebar() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 hover:bg-gray-600 flex items-center justify-center transition-all duration-200 ease-in-out hover:scale-110"
+                      className="h-6 w-6 p-0 hover:bg-gray-600 flex items-center justify-center transition-all duration-200 ease-in-out"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <MoreHorizontal size={14} className="text-gray-400 transition-all duration-200 ease-in-out" />
@@ -282,12 +282,12 @@ export default function Sidebar() {
           >
             <DropdownMenuItem 
               onClick={() => setShowSettings(true)}
-              className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:scale-[1.02]"
+              className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out"
             >
               <Settings size={18} className="text-gray-500 transition-all duration-200 ease-in-out" />
               <span className="text-sm font-medium">Settings</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:scale-[1.02]">
+            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out">
               <div className="w-[18px] h-[18px] flex items-center justify-center">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-500 transition-all duration-200 ease-in-out">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
@@ -298,7 +298,7 @@ export default function Sidebar() {
               <span className="text-sm font-medium">System</span>
             </DropdownMenuItem>
             <div className="border-t border-gray-200 my-1" />
-            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out hover:scale-[1.02]">
+            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out">
               <div className="w-[18px] h-[18px] flex items-center justify-center">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-500 transition-all duration-200 ease-in-out">
                   <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
