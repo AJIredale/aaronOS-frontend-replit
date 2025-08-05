@@ -119,6 +119,14 @@ export default function Sidebar() {
         </button>
       </div>
 
+      {/* Divider and Recent Work Label */}
+      <div className="px-4">
+        <div className="border-t border-gray-700 opacity-30 mb-3"></div>
+        <div className="mb-3">
+          <span className="text-xs text-gray-500 font-medium">Recent Work</span>
+        </div>
+      </div>
+
       {/* Chat History */}
       <div className="flex-1 px-4 pb-4 overflow-y-hidden hover:overflow-y-auto slim-scrollbar">
         <div className="space-y-1">

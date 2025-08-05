@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useSocket } from "@/hooks/use-socket";
 import { useAgentState } from "@/hooks/use-agent-state";
 import { useActivityStore } from "@/store/activity";
-import { Clock, Activity, Database, Loader2, Check } from "lucide-react";
+import { Zap, Activity, Database, Loader2, Check } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 export default function ActivityPanel() {
@@ -41,10 +41,11 @@ export default function ActivityPanel() {
         {/* Terminal Output */}
         <Card className="p-4">
           <h4 className="text-sm font-medium text-gray-900 mb-3 flex items-center gap-2">
-            <Activity size={16} />
+            <Activity size={16} style={{ color: '#878f9d' }} />
             Terminal
           </h4>
-          <div className="bg-black rounded-lg p-3 font-mono text-xs max-h-48 overflow-y-auto" style={{
+          <div className="rounded-lg p-3 font-mono text-xs max-h-48 overflow-y-auto" style={{
+            backgroundColor: 'rgb(19 24 42)',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none'
           }}>
@@ -67,7 +68,7 @@ export default function ActivityPanel() {
         {/* Actions Table */}
         <Card className="p-4">
           <h4 className="text-sm font-medium text-gray-900 mb-3 flex items-center gap-2">
-            <Clock size={16} />
+            <Zap size={16} style={{ color: '#878f9d' }} />
             Actions
           </h4>
           <div className="space-y-3">
