@@ -25,8 +25,8 @@
   --radius: 0.5rem;
   
   /* Aaron-specific colors */
-  --aaron-dark: hsl(240, 12%, 11%);
-  --aaron-secondary: hsl(240, 9%, 17%);
+  --aaron-dark: hsl(225, 39%, 12%);
+  --aaron-secondary: hsl(225, 35%, 18%);
   --aaron-accent: hsl(207, 90%, 54%);
 }
 
