@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useConversationStore } from "@/store/conversation";
 import AaronIcon from "@/components/aaron-icon";
 import { useAgentState } from "@/hooks/use-agent-state";
-import { MessageSquare, Settings, Plus, User, CreditCard, HelpCircle, Search, Edit, MoreHorizontal, Edit2, Archive, Trash2 } from "lucide-react";
+import { MessageSquare, Settings, Plus, User, CreditCard, HelpCircle, Search, Edit, MoreHorizontal, Edit2, Archive, Trash2, FolderPlus } from "lucide-react";
 import aaronOSLogo from "@assets/aaron OS Logo Light New@4x_1754411629245.png";
 
 export default function Sidebar() {
@@ -154,7 +154,7 @@ export default function Sidebar() {
                       <MoreHorizontal size={14} className="text-gray-400 transition-all duration-200 ease-in-out" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-40">
+                  <DropdownMenuContent align="end" className="w-48">
                     <DropdownMenuItem className="flex items-center gap-2">
                       <Edit2 size={14} />
                       Rename
@@ -162,6 +162,10 @@ export default function Sidebar() {
                     <DropdownMenuItem className="flex items-center gap-2">
                       <Archive size={14} />
                       Archive
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="flex items-center gap-2">
+                      <FolderPlus size={14} />
+                      Move to Group
                     </DropdownMenuItem>
                     <DropdownMenuItem className="flex items-center gap-2 text-red-600">
                       <Trash2 size={14} />
@@ -178,22 +182,53 @@ export default function Sidebar() {
       {/* Groups Section */}
       <div className="px-4 mb-4">
         <div className="border-t border-gray-700 opacity-30 mb-3"></div>
-        <div className="mb-3">
+        <div className="flex items-center justify-between mb-3">
           <span className="text-xs text-gray-500 font-medium">Groups</span>
+          <button className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center text-gray-500 hover:text-white hover:border-white transition-all duration-200 ease-in-out hover:scale-110">
+            <Plus size={10} />
+          </button>
         </div>
         <div className="space-y-1">
           {[
-            { name: "Staff Planning", icon: "👥" },
-            { name: "Operations", icon: "⚙️" },
-            { name: "Website", icon: "🌐" }
+            { name: "Staff Planning" },
+            { name: "Operations" },
+            { name: "Website" }
           ].map((group, index) => (
-            <button
+            <div
               key={index}
-              className="w-full flex items-center gap-3 py-2 px-3 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)] hover:scale-[1.02]"
+              className="group flex items-center rounded-lg transition-all duration-200 ease-in-out relative hover:bg-[rgb(37,46,59)] hover:scale-[1.01]"
             >
-              <span className="text-sm">{group.icon}</span>
-              <span className="text-sm">{group.name}</span>
-            </button>
+              <button
+                className="flex-1 text-left text-sm text-white font-normal truncate py-2 pl-2 pr-1 transition-all duration-200 ease-in-out"
+              >
+                {group.name}
+              </button>
+              
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity pr-2 flex items-center">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 w-6 p-0 hover:bg-gray-600 flex items-center justify-center transition-all duration-200 ease-in-out hover:scale-110"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <MoreHorizontal size={14} className="text-gray-400 transition-all duration-200 ease-in-out" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-40">
+                    <DropdownMenuItem className="flex items-center gap-2">
+                      <Edit2 size={14} />
+                      Rename
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="flex items-center gap-2 text-red-600">
+                      <Trash2 size={14} />
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
           ))}
         </div>
       </div>
