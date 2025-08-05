@@ -2,9 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { apiRequest } from "@/lib/api";
 import { useConversationStore } from "@/store/conversation";
-import { Send, Plus } from "lucide-react";
+import { Send, Plus, Paperclip, FileText, Image, Code, Database } from "lucide-react";
 
 const SLASH_COMMANDS = [
   { command: "/clear", description: "Clear conversation" },
@@ -170,16 +171,48 @@ export default function CommandBar() {
               </div>
             )}
             
-            <Textarea
-              ref={textareaRef}
-              value={input}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              placeholder="Message Aaron..."
-              className="min-h-[44px] max-h-[120px] resize-none pr-12 focus:ring-2 focus:ring-[var(--aaron-accent)] focus:border-transparent"
-              style={{ fontSize: '15px' }}
-              disabled={sendMessageMutation.isPending}
-            />
+            <div className="relative flex items-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 z-10 hover:bg-gray-100"
+                  >
+                    <Plus size={16} className="text-gray-500" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  <DropdownMenuItem>
+                    <Paperclip className="mr-2 h-4 w-4" />
+                    <span>Add file</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Image className="mr-2 h-4 w-4" />
+                    <span>Add image</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Code className="mr-2 h-4 w-4" />
+                    <span>Add code snippet</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Database className="mr-2 h-4 w-4" />
+                    <span>Connect data source</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <Textarea
+                ref={textareaRef}
+                value={input}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                placeholder="Message Aaron..."
+                className="min-h-[44px] max-h-[120px] resize-none pl-12 pr-12 focus:ring-2 focus:ring-[var(--aaron-accent)] focus:border-transparent"
+                style={{ fontSize: '15px' }}
+                disabled={sendMessageMutation.isPending}
+              />
+            </div>
             
             <Button
               type="submit"

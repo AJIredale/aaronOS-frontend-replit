@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useSocket } from "@/hooks/use-socket";
 import { useAgentState } from "@/hooks/use-agent-state";
 import { useActivityStore } from "@/store/activity";
-import { Clock, Activity, Database } from "lucide-react";
+import { Clock, Activity, Database, Loader2, Check } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 export default function ActivityPanel() {
@@ -44,13 +44,17 @@ export default function ActivityPanel() {
             <Activity size={16} />
             Terminal
           </h4>
-          <div className="bg-black rounded-lg p-3 font-mono text-xs max-h-48 overflow-y-auto">
-            {terminalLines.map((line, index) => (
-              <div key={index} className={`mb-1 ${line.startsWith('$') ? 'text-green-400' : 'text-gray-300'}`}>
-                {line}
+          <div className="bg-black rounded-lg p-3 font-mono text-xs max-h-48 overflow-hidden relative">
+            <div className="flex flex-col-reverse max-h-full">
+              <div>
+                {isActive && <div className="text-green-400 animate-pulse mb-1">$ █</div>}
+                {terminalLines.slice(-8).map((line, index) => (
+                  <div key={index} className={`mb-1 ${line.startsWith('$') ? 'text-green-400' : 'text-gray-300'}`}>
+                    {line}
+                  </div>
+                )).reverse()}
               </div>
-            ))}
-            {isActive && <div className="text-green-400 animate-pulse">$ █</div>}
+            </div>
           </div>
         </Card>
 
@@ -60,19 +64,15 @@ export default function ActivityPanel() {
             <Clock size={16} />
             Actions
           </h4>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {actions.map((action, index) => (
-              <div key={index} className="flex items-center justify-between text-xs">
-                <span className="flex-1 truncate text-gray-700">{action.action}</span>
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <Badge 
-                    variant={action.status === 'completed' ? 'default' : action.status === 'in-progress' ? 'secondary' : 'outline'}
-                    className="text-xs"
-                  >
-                    {action.status}
-                  </Badge>
-                  <span className="text-gray-400">{action.time}</span>
+              <div key={index} className="flex items-center gap-3 text-sm">
+                <div className="flex-shrink-0 w-4 h-4 flex items-center justify-center">
+                  {action.status === 'completed' && <Check size={16} className="text-green-500" />}
+                  {action.status === 'in-progress' && <Loader2 size={16} className="text-blue-500 animate-spin" />}
+                  {action.status === 'pending' && <div className="w-2 h-2 rounded-full border border-gray-300"></div>}
                 </div>
+                <span className="flex-1 text-gray-700">{action.action}</span>
               </div>
             ))}
           </div>

@@ -7,6 +7,7 @@ import AaronIcon from "@/components/aaron-icon";
 import { useSocket } from "@/hooks/use-socket";
 import { useConversationStore } from "@/store/conversation";
 import { formatDistanceToNow } from "date-fns";
+import aaronLogo from "@assets/Asset 14@4x_1754418674283.png";
 
 export default function ChatPanel() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -80,19 +81,13 @@ export default function ChatPanel() {
               <div
                 className={`rounded-lg p-3 max-w-3xl ${
                   message.role === "user"
-                    ? "bg-[var(--aaron-accent)] text-white"
-                    : "bg-gray-50 text-gray-900"
+                    ? "bg-[#f5f6f8] text-black"
+                    : "bg-white text-black"
                 }`}
               >
                 <p className="whitespace-pre-wrap" style={{ fontSize: '15px', lineHeight: '1.5' }}>{message.content}</p>
               </div>
-              <div className="flex items-center gap-1 mt-1 text-xs text-gray-400">
-                {message.role === "user" ? (
-                  <span>You</span>
-                ) : (
-                  <span>Aaron</span>
-                )}
-              </div>
+
             </div>
 
             {message.role === "user" && (
@@ -105,18 +100,14 @@ export default function ChatPanel() {
 
         {isTyping && (
           <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-full bg-[var(--aaron-dark)] flex items-center justify-center flex-shrink-0 aaron-shimmer">
-              <AaronIcon size={20} className="text-white" />
+            <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
+              <img src={aaronLogo} alt="Aaron" className="w-6 h-6" />
             </div>
             <div className="flex-1">
-              <div className="bg-gray-50 rounded-lg p-3 max-w-3xl">
+              <div className="bg-white rounded-lg p-3 max-w-3xl">
                 <div className="flex items-center gap-2">
-                  <div className="typing-indicator">
-                    <div className="typing-dot"></div>
-                    <div className="typing-dot"></div>
-                    <div className="typing-dot"></div>
-                  </div>
-                  <span className="text-xs text-gray-500">thinking...</span>
+                  <img src={aaronLogo} alt="Aaron" className="w-4 h-4" />
+                  <span className="text-sm text-gray-700">Aaron is thinking...</span>
                 </div>
               </div>
             </div>
