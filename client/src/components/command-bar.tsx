@@ -149,36 +149,35 @@ export default function CommandBar() {
     <div className="p-6 border-t border-gray-200 bg-white">
       <div className="max-w-[770px] mx-auto">
         <form onSubmit={handleSubmit} className="relative">
-          <div className="flex items-end gap-4">
-            <div className="flex-1 relative">
-            {showCommands && filteredCommands.length > 0 && (
-              <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-                {filteredCommands.map((cmd, index) => (
-                  <div
-                    key={cmd.command}
-                    className={`p-3 cursor-pointer border-b border-gray-100 last:border-b-0 ${
-                      index === selectedCommand ? "bg-gray-50" : ""
-                    }`}
-                    onClick={() => {
-                      setInput(cmd.command + " ");
-                      setShowCommands(false);
-                      textareaRef.current?.focus();
-                    }}
-                  >
-                    <div className="font-medium text-sm">{cmd.command}</div>
-                    <div className="text-xs text-gray-500">{cmd.description}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            <div className="relative flex items-center">
+          {showCommands && filteredCommands.length > 0 && (
+            <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+              {filteredCommands.map((cmd, index) => (
+                <div
+                  key={cmd.command}
+                  className={`p-3 cursor-pointer border-b border-gray-100 last:border-b-0 ${
+                    index === selectedCommand ? "bg-gray-50" : ""
+                  }`}
+                  onClick={() => {
+                    setInput(cmd.command + " ");
+                    setShowCommands(false);
+                    textareaRef.current?.focus();
+                  }}
+                >
+                  <div className="font-medium text-sm">{cmd.command}</div>
+                  <div className="text-xs text-gray-500">{cmd.description}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          <div className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-start p-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 z-10 hover:bg-gray-100"
+                    className="h-8 w-8 p-0 mr-3 mt-1 hover:bg-gray-100 flex-shrink-0"
                   >
                     <Plus size={16} className="text-gray-500" />
                   </Button>
@@ -203,36 +202,31 @@ export default function CommandBar() {
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              <Textarea
-                ref={textareaRef}
-                value={input}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-                placeholder="Message Aaron..."
-                className="min-h-[44px] max-h-[120px] resize-none pl-12 pr-16 border-gray-200 focus:border-gray-300 focus:shadow-sm focus:ring-0"
-                style={{ fontSize: '15px' }}
-                disabled={sendMessageMutation.isPending}
-              />
+              <div className="flex-1 relative">
+                <Textarea
+                  ref={textareaRef}
+                  value={input}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Message Aaron..."
+                  className="min-h-[44px] max-h-[120px] resize-none border-0 bg-transparent text-base p-0 focus:ring-0 focus:outline-none"
+                  disabled={sendMessageMutation.isPending}
+                />
+              </div>
+              
+              <Button
+                type="submit"
+                size="sm"
+                className={`ml-3 h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 ${
+                  input.trim() 
+                    ? "bg-black hover:bg-gray-800 text-white" 
+                    : "bg-gray-300 hover:bg-gray-400 text-white"
+                }`}
+                disabled={!input.trim() || sendMessageMutation.isPending}
+              >
+                <Send size={16} />
+              </Button>
             </div>
-            
-            <Button
-              type="submit"
-              size="sm"
-              className={`absolute right-3 bottom-3 h-8 w-8 p-0 rounded-full transition-colors ${
-                input.trim() 
-                  ? "bg-black hover:bg-gray-800 text-white" 
-                  : "bg-gray-300 hover:bg-gray-400 text-white"
-              }`}
-              disabled={sendMessageMutation.isPending}
-            >
-              <Send size={14} className="ml-0.5" />
-            </Button>
-          </div>
-        </div>
-        
-          <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
-            <span>Press Enter to send, Shift+Enter for new line</span>
-            <span>{input.length}/4000</span>
           </div>
         </form>
       </div>

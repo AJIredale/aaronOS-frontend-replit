@@ -99,17 +99,29 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation Options */}
-      <div className="p-4 space-y-3">
+      <div className="px-4 py-3 space-y-2">
         <button 
           onClick={handleNewChat}
-          className="w-full flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
+          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-colors rounded-lg"
+          style={{
+            '--hover-bg': 'rgb(37 46 59)'
+          } as any}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgb(37 46 59)'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
         >
           <div className="w-4 h-4 rounded-full border border-current flex items-center justify-center">
             <Plus size={10} />
           </div>
           <span className="text-sm">New Task</span>
         </button>
-        <button className="w-full flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+        <button 
+          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-colors rounded-lg"
+          style={{
+            '--hover-bg': 'rgb(37 46 59)'
+          } as any}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgb(37 46 59)'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+        >
           <Search size={16} />
           <span className="text-sm">Search Chat</span>  
         </button>
@@ -121,11 +133,17 @@ export default function Sidebar() {
           {chatHistory.map((chat) => (
             <div
               key={chat.id}
-              className="group flex items-center rounded-lg hover:bg-gray-700 transition-colors relative"
+              className="group flex items-center rounded-lg transition-colors relative"
+              style={{
+                '--hover-bg': 'rgb(37 46 59)'
+              } as any}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgb(37 46 59)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               <button
                 onClick={() => handleChatSelect(chat)}
-                className="flex-1 text-left px-3 py-2 text-sm text-white font-medium truncate"
+                className="flex-1 text-left text-sm text-white font-normal truncate"
+                style={{ padding: '0.4rem' }}
               >
                 {chat.title}
               </button>
@@ -169,7 +187,12 @@ export default function Sidebar() {
           <DialogTrigger asChild>
             <Button 
               variant="ghost" 
-              className="w-full justify-start gap-2 text-gray-300 hover:text-white hover:bg-gray-700"
+              className="w-full justify-start gap-2 text-gray-300 hover:text-white"
+              style={{
+                '--hover-bg': 'rgb(37 46 59)'
+              } as any}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgb(37 46 59)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               <User size={16} />
               AJ Wilson
