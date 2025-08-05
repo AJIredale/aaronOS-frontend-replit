@@ -183,7 +183,7 @@ export default function Sidebar() {
       <div className="px-4 mb-4">
         <div className="border-t border-gray-700 opacity-30 mb-3"></div>
         <div className="flex items-center justify-between mb-3">
-          <span className="text-xs text-gray-500 font-medium">Groups</span>
+          <span className="text-xs text-gray-500 font-medium">Recurring Tasks</span>
           <button className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center text-gray-500 hover:text-white hover:border-white transition-all duration-200 ease-in-out hover:scale-110">
             <Plus size={10} />
           </button>
@@ -192,7 +192,7 @@ export default function Sidebar() {
           {[
             { name: "Staff Planning" },
             { name: "Operations" },
-            { name: "Website" }
+            { name: "Website SEO" }
           ].map((group, index) => (
             <div
               key={index}
