@@ -182,22 +182,59 @@ export default function Sidebar() {
       
       {/* User Profile */}
       <div className="p-4 border-t border-gray-700">
-        <Dialog open={showSettings} onOpenChange={setShowSettings}>
-          <DialogTrigger asChild>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
             <Button 
               variant="ghost" 
-              className="w-full justify-start gap-2 text-gray-300 hover:text-white"
-              style={{
-                '--hover-bg': 'rgb(37 46 59)'
-              } as any}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgb(37 46 59)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              className="w-full justify-start gap-3 text-white hover:text-white rounded-lg bg-gray-700 hover:bg-gray-600 border-0"
             >
-              <User size={16} />
-              AJ Iredale
+              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                <User size={16} className="text-white" />
+              </div>
+              <div className="flex flex-col items-start">
+                <span className="text-sm font-medium">User</span>
+                <span className="text-xs text-gray-300">user@aaronos.com</span>
+              </div>
             </Button>
-          </DialogTrigger>
-            <DialogContent className="max-w-5xl h-[600px] overflow-hidden">
+          </DropdownMenuTrigger>
+          <DropdownMenuContent 
+            align="start" 
+            side="top"
+            className="w-64 mb-2 bg-white rounded-xl shadow-lg border border-gray-200"
+          >
+            <DropdownMenuItem 
+              onClick={() => setShowSettings(true)}
+              className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer"
+            >
+              <Settings size={18} className="text-gray-500" />
+              <span className="text-sm font-medium">Settings</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <div className="w-[18px] h-[18px] flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-500">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+              </div>
+              <span className="text-sm font-medium">System</span>
+            </DropdownMenuItem>
+            <div className="border-t border-gray-200 my-1" />
+            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg cursor-pointer">
+              <div className="w-[18px] h-[18px] flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-500">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                  <polyline points="16,17 21,12 16,7"/>
+                  <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+              </div>
+              <span className="text-sm font-medium">Sign out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Dialog open={showSettings} onOpenChange={setShowSettings}>
+          <DialogContent className="max-w-5xl h-[600px] overflow-hidden">
               <DialogHeader>
                 <DialogTitle>Profile & Settings</DialogTitle>
               </DialogHeader>
