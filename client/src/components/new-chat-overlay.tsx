@@ -75,7 +75,7 @@ export default function NewChatOverlay({ onStartChat, onClose }: NewChatOverlayP
             />
             
             {/* Bottom toolbar */}
-            <div className="flex items-center justify-between p-4 border-t border-gray-100">
+            <div className="flex items-center justify-between p-4 border-t border-gray-100 min-h-[56px]">
               <div className="flex items-center gap-2">
                 <Button
                   type="button"

@@ -203,13 +203,13 @@ export default function CommandBar() {
           )}
           
           <div className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow focus-within:shadow-md focus-within:border-gray-200">
-            <div className="flex items-start p-4">
+            <div className="flex items-center p-4 min-h-[56px]">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0 mr-3 mt-1 hover:bg-gray-100 flex-shrink-0"
+                    className="h-8 w-8 p-0 mr-3 hover:bg-gray-100 flex-shrink-0"
                   >
                     <Plus size={16} className="text-gray-500" />
                   </Button>
@@ -234,14 +234,14 @@ export default function CommandBar() {
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              <div className="flex-1 relative">
+              <div className="flex-1 relative flex items-center">
                 <Textarea
                   ref={textareaRef}
                   value={input}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   placeholder="Message Aaron..."
-                  className="min-h-[44px] max-h-[120px] resize-none border-0 bg-transparent text-base p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="min-h-[24px] max-h-[120px] resize-none border-0 bg-transparent text-base p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
                   disabled={sendMessageMutation.isPending}
                 />
               </div>
