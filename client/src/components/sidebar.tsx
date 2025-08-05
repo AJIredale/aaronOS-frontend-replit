@@ -252,7 +252,7 @@ export default function Sidebar() {
                 {/* Settings Content */}
                 <div className="flex-1 pl-6 overflow-y-auto">
                   {activeTab === "account" && (
-                    <div className="space-y-6">
+                    <div className="space-y-6 pt-0">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Account</h3>
                         <div className="space-y-4">
@@ -288,7 +288,7 @@ export default function Sidebar() {
                   )}
 
                   {activeTab === "settings" && (
-                    <div className="space-y-6">
+                    <div className="space-y-6 pt-0">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Settings</h3>
                         <div className="space-y-4">
@@ -319,7 +319,7 @@ export default function Sidebar() {
                   )}
 
                   {activeTab === "usage" && (
-                    <div className="space-y-6">
+                    <div className="space-y-6 pt-0">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Usage & Credits</h3>
                         <div className="bg-gray-50 rounded-lg p-4">
@@ -352,7 +352,7 @@ export default function Sidebar() {
                   )}
 
                   {activeTab === "connected" && (
-                    <div className="space-y-6">
+                    <div className="space-y-6 pt-0">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Connected apps</h3>
                         
@@ -482,7 +482,7 @@ export default function Sidebar() {
                   )}
 
                   {activeTab === "help" && (
-                    <div className="space-y-6">
+                    <div className="space-y-6 pt-0">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900 mb-4">Help & Support</h3>
                         <div className="space-y-2">
