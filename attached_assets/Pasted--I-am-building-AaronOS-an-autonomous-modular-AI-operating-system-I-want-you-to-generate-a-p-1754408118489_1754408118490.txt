@@ -1,0 +1,130 @@
+🚀 I am building **AaronOS**, an autonomous, modular AI operating system. I want you to generate a production-quality **frontend UI** using **React + TailwindCSS + shadcn/ui**, designed to interface cleanly with my existing backend (Node.js + Express + Redis + Docker). This UI will act as the main command interface for interacting with my internal agent, **Aaron** — a GPT-based AI automation system.
+
+### 🎯 Key Objectives:
+- Wrap the **Aaron AI agent** in a sleek, minimal, responsive UI
+- Display AI conversation threads with sharp UX
+- Include modules for viewing active memory (RAM), pinned context, and flushed memory shards
+- Integrate task tracking and command input
+- Merge seamlessly with my current AaronOS backend
+
+---
+
+## 🔧 Backend API Overview (already built):
+
+- `GET /api/agent/status` — returns current agent state (idle, thinking, executing)
+- `POST /api/agent/message` — send message to the AI, returns response
+- `GET /api/context/active` — returns current working memory (~15k tokens max)
+- `GET /api/context/shard/:project` — returns cold memory (flushed data) per project
+- `POST /api/flush/trigger` — flushes resolved context
+- `GET /api/tasks` — returns current tasks with status (`planned`, `in_progress`, `resolved`)
+- WebSocket (via Socket.IO) — for live task updates, chat output, and streaming responses
+
+---
+
+## 🧠 FlushCore Memory System (important!)
+
+- RAM = active short-term memory (live, unresolved tasks or context)
+- Pinned = locked tasks/goals the user wants visible at all times
+- Flushed = compressed memory (stored by project, retrieved via shard ID)
+- UI must allow toggling between these memory states
+
+---
+
+## 📦 UI Component Requirements:
+
+### ✅ 1. Chat Interface (`ChatPanel`)
+- Show threaded conversation with **Aaron**
+- Highlight system messages (e.g. "Task flushed", "Context switched")
+- Streaming output via WebSocket
+- Markdown support for AI messages
+- Code blocks shown in a monospaced box
+- Auto-scroll on new message
+
+### ✅ 2. Command Bar (`CommandBar`)
+- Slash-style commands (e.g. `/flush`, `/pin`, `/switch project`)
+- Autocomplete suggestions
+- Press `Enter` to trigger POST `/api/agent/message`
+
+### ✅ 3. Memory Dashboard (`MemoryPanel`)
+- Tabs: `Active RAM`, `Pinned`, `Flushed`
+- Allow restoring flushed memory to RAM
+- Show compressed memory summaries
+- Highlight status (`resolved`, `in_progress`, `pinned`)
+
+### ✅ 4. Task Viewer (`TaskPanel`)
+- List current tasks with tags (priority, state, time)
+- Sort by active, blocked, resolved
+- Show timestamps
+- Allow pin/unpin per task
+
+### ✅ 5. Agent Status (`AgentStatus`)
+- Display current status (Idle / Thinking / Executing)
+- Show system load (optional), last response time
+- Status indicator via color (🟢 / 🟡 / 🔴)
+
+---
+
+## 🧪 Developer Requirements:
+
+- Stack: **React + TailwindCSS + shadcn/ui + TypeScript**
+- Clean folder structure (`components/`, `hooks/`, `lib/`, `pages/`)
+- State: use Zustand or React Context (your choice, but must be clean)
+- Live updates: connect to backend Socket.IO endpoint
+- Axios for API requests
+- Framer Motion for subtle animations (transitions, fades, etc.)
+- Mobile responsive design (chat input bar floats bottom of viewport)
+
+---
+
+## 📁 Ideal Folder Structure:
+
+/src
+/components
+ChatPanel.tsx
+CommandBar.tsx
+MemoryPanel.tsx
+TaskPanel.tsx
+AgentStatus.tsx
+/hooks
+useSocket.ts
+useAgentState.ts
+/pages
+index.tsx
+/lib
+api.ts // Axios instance
+memoryUtils.ts // Flush/restore helpers
+tailwind.config.ts
+App.tsx
+
+yaml
+Copy
+
+---
+
+## 🧙‍♂️ Bonus Features (optional if time allows):
+
+- Memory Heatmap visual (blocks for RAM / Pinned / Flushed per project)
+- Notification tray for system events
+- Export memory as `.json` or `.md` file
+- Floating **Aaron** Assistant panel (like a mini assistant in the corner)
+- Dark Mode toggle
+
+---
+
+## 📣 What NOT to Do:
+
+- Don’t build the backend — it already exists
+- Don’t store chat state locally — it’s all backend managed
+- Don’t assume OpenAI streaming, we use backend relay via Socket.IO
+- Don’t use huge component libraries like Material UI
+
+---
+
+## 🏁 End Goal:
+
+A sleek, fast, context-aware frontend dashboard to manage AI agents, memory, and workflows visually. I want this to **feel like Notion x Linear x Replit**, with the **soul of a command-line tool**, and the **intelligence of an operating system**.
+
+**AaronOS** is not just a chatbot — it’s an AI-powered operating layer for task execution, context retention, and logic chaining.
+
+Make this frontend so smooth I forget I’m not typing to a real assistant.
+

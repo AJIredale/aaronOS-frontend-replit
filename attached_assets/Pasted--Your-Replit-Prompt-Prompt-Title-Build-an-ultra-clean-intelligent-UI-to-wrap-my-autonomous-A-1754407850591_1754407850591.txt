@@ -1,0 +1,72 @@
+🧾 🔥 Your Replit Prompt:
+Prompt Title:
+Build an ultra-clean, intelligent UI to wrap my autonomous AI agent (Manus) into my existing AaronOS framework.
+
+🧠 Prompt Body:
+I’m building an advanced AI operating system called AaronOS, and I want this UI to serve as the main dashboard for interacting with the AI agent (internally codenamed Manus).
+
+Backend is already built in Node.js/Express, with a modular API and socket communication layer. I just need a frontend (React + Tailwind) that:
+
+Has a modern, clean UI — similar to tools like Notion, Linear, and Replit itself.
+
+Displays conversations with the AI agent (threaded chat-style).
+
+Shows task progress, summaries, and editable inline blocks.
+
+Allows toggling between Active Tasks, Resolved Tasks, and Pinned Context.
+
+Supports real-time agent output (via Socket.IO).
+
+Offers a command input bar (like Linear/CommandK-style fuzzy command UI).
+
+Works with mobile and desktop (responsive layout).
+
+Use TailwindCSS + shadcn/ui components.
+
+Bonus if it includes:
+
+A "Memory Heatmap" UI for context (Active / Pinned / Flushed)
+
+Ability to click any summary to "restore to RAM"
+
+Smooth transitions and slight animations (e.g. framer-motion)
+
+🔧 Bonus Prompt Add-Ons (Optional)
+If you're talking to the Replit AI and want to go beyond:
+
+“Please keep state cleanly managed using Zustand or simple React Context API.”
+
+“Route API calls via Axios to /api/agent and /api/memory endpoints.”
+
+“Keep components modular — separate out ChatPanel, MemoryPanel, CommandBar, and AgentStatus.”
+
+🖼️ What the Output Should Include
+App.tsx: clean shell
+
+ChatPanel.tsx: shows agent convo
+
+CommandBar.tsx: input with autocomplete / slash commands
+
+MemoryPanel.tsx: tabs for Active / Pinned / Flushed
+
+TaskSummary.tsx: compressed items from FlushCore
+
+AgentStatus.tsx: shows online, idle, processing etc
+
+Tailwind config and global styles
+
+Socket listener hook: useSocket.ts
+
+🎯 Your Endgame
+This Replit UI becomes your Manus Command Hub, piped into your actual backend via:
+
+GET /api/context/active (Live RAM)
+
+GET /api/context/shard/:project (FlushCore shards)
+
+POST /api/agent/message
+
+GET /api/agent/status
+
+POST /api/flush/trigger
+
