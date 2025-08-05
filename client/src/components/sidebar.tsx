@@ -1,7 +1,7 @@
 import AaronIcon from "@/components/aaron-icon";
 import AgentStatus from "@/components/agent-status";
 import { useAgentState } from "@/hooks/use-agent-state";
-import aaronOSLogo from "@assets/aaron OS logo light@4x_1754411458932.png";
+import aaronOSLogo from "@assets/aaron OS Logo Light New@4x_1754411629245.png";
 
 export default function Sidebar() {
   const { agentStatus } = useAgentState();
