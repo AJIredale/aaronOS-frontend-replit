@@ -44,16 +44,22 @@ export default function ActivityPanel() {
             <Activity size={16} />
             Terminal
           </h4>
-          <div className="bg-black rounded-lg p-3 font-mono text-xs max-h-48 overflow-hidden relative">
-            <div className="flex flex-col-reverse max-h-full">
-              <div>
-                {isActive && <div className="text-green-400 animate-pulse mb-1">$ █</div>}
-                {terminalLines.slice(-8).map((line, index) => (
-                  <div key={index} className={`mb-1 ${line.startsWith('$') ? 'text-green-400' : 'text-gray-300'}`}>
-                    {line}
-                  </div>
-                )).reverse()}
-              </div>
+          <div className="bg-black rounded-lg p-3 font-mono text-xs max-h-48 overflow-y-auto" style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none'
+          }}>
+            <style>{`
+              .terminal-scroll::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
+            <div className="terminal-scroll">
+              {terminalLines.slice(-8).map((line, index) => (
+                <div key={index} className={`mb-1 ${line.startsWith('$') ? 'text-green-400' : 'text-gray-300'}`}>
+                  {line}
+                </div>
+              ))}
+              {isActive && <div className="text-green-400 animate-pulse">$ █</div>}
             </div>
           </div>
         </Card>

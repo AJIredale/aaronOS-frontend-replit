@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useConversationStore } from "@/store/conversation";
 import AaronIcon from "@/components/aaron-icon";
@@ -11,6 +11,7 @@ import aaronOSLogo from "@assets/aaron OS Logo Light New@4x_1754411629245.png";
 export default function Sidebar() {
   const { agentStatus } = useAgentState();
   const [showSettings, setShowSettings] = useState(false);
+  const [activeTab, setActiveTab] = useState("account");
   const { clearMessages, setCurrentConversation } = useConversationStore();
 
   const chatHistory = [
@@ -103,7 +104,9 @@ export default function Sidebar() {
           onClick={handleNewChat}
           className="w-full flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
         >
-          <Edit size={16} />
+          <div className="w-4 h-4 rounded-full border border-current flex items-center justify-center">
+            <Plus size={10} />
+          </div>
           <span className="text-sm">New Task</span>
         </button>
         <button className="w-full flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
@@ -161,103 +164,191 @@ export default function Sidebar() {
       </div>
       
       {/* User Profile */}
-      <div className="p-4">
-        <div className="w-full space-y-2">
-          <Dialog open={showSettings} onOpenChange={setShowSettings}>
-            <DialogTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-full justify-start gap-2 text-gray-300 hover:text-white hover:bg-gray-700"
-              >
-                <Settings size={16} />
-                Settings
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+      <div className="p-4 border-t border-gray-700">
+        <Dialog open={showSettings} onOpenChange={setShowSettings}>
+          <DialogTrigger asChild>
+            <Button 
+              variant="ghost" 
+              className="w-full justify-start gap-2 text-gray-300 hover:text-white hover:bg-gray-700"
+            >
+              <User size={16} />
+              AJ Wilson
+            </Button>
+          </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Profile & Settings</DialogTitle>
+              </DialogHeader>
               <div className="flex">
                 {/* Settings Sidebar */}
-                <div className="w-48 border-r pr-4">
+                <div className="w-48 pr-6 border-r border-gray-200">
                   <div className="space-y-1">
-                    <Button variant="ghost" className="w-full justify-start text-sm">
-                      <User className="mr-2 h-4 w-4" />
+                    <button 
+                      onClick={() => setActiveTab("account")}
+                      className={`w-full text-left px-3 py-2 text-sm font-medium rounded-lg ${
+                        activeTab === "account" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      }`}
+                    >
                       Account
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start text-sm bg-gray-100">
-                      <Settings className="mr-2 h-4 w-4" />
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("settings")}
+                      className={`w-full text-left px-3 py-2 text-sm rounded-lg ${
+                        activeTab === "settings" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      }`}
+                    >
                       Settings
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start text-sm">
-                      <CreditCard className="mr-2 h-4 w-4" />
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("usage")}
+                      className={`w-full text-left px-3 py-2 text-sm rounded-lg ${
+                        activeTab === "usage" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      }`}
+                    >
                       Usage
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start text-sm">
-                      <HelpCircle className="mr-2 h-4 w-4" />
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab("help")}
+                      className={`w-full text-left px-3 py-2 text-sm rounded-lg ${
+                        activeTab === "help" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      }`}
+                    >
                       Help
-                    </Button>
+                    </button>
                   </div>
                 </div>
 
                 {/* Settings Content */}
                 <div className="flex-1 pl-6">
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-lg font-semibold mb-4">Account Settings</h3>
-                      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                        <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                          <User className="text-white" size={24} />
-                        </div>
-                        <div>
-                          <div className="font-medium">Demo User</div>
-                          <div className="text-sm text-gray-500">user@aaronos.com</div>
+                  {activeTab === "account" && (
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Account</h3>
+                        <div className="space-y-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-16 h-16 bg-[var(--aaron-dark)] rounded-full flex items-center justify-center">
+                              <User size={32} className="text-white" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-gray-900">AJ Wilson</div>
+                              <div className="text-sm text-gray-500">aj@example.com</div>
+                              <div className="text-xs text-[var(--aaron-accent)] mt-1">Core Plan</div>
+                            </div>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-4 mt-6">
+                            <div className="space-y-2">
+                              <label className="text-sm font-medium text-gray-700">First Name</label>
+                              <input type="text" defaultValue="AJ" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                            </div>
+                            <div className="space-y-2">
+                              <label className="text-sm font-medium text-gray-700">Last Name</label>
+                              <input type="text" defaultValue="Wilson" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                            </div>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700">Email</label>
+                            <input type="email" defaultValue="aj@example.com" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                          </div>
                         </div>
                       </div>
                     </div>
+                  )}
 
-                    <div>
-                      <h4 className="font-medium mb-3">AaronOS Pro</h4>
-                      <div className="bg-gray-50 rounded-lg p-4">
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-sm">Monthly credits</span>
-                          <span className="text-sm font-medium">0 / 15,000</span>
-                        </div>
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-sm">Free credits</span>
-                          <span className="text-sm">133</span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Add-on credits</span>
-                          <span className="text-sm">10,575</span>
+                  {activeTab === "settings" && (
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Settings</h3>
+                        <div className="space-y-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-sm font-medium text-gray-700">Enable notifications</div>
+                              <div className="text-xs text-gray-500">Get notified when tasks complete</div>
+                            </div>
+                            <input type="checkbox" className="toggle" defaultChecked />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-sm font-medium text-gray-700">Auto-save conversations</div>
+                              <div className="text-xs text-gray-500">Automatically save chat history</div>
+                            </div>
+                            <input type="checkbox" className="toggle" defaultChecked />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-sm font-medium text-gray-700">Dark mode</div>
+                              <div className="text-xs text-gray-500">Use dark interface theme</div>
+                            </div>
+                            <input type="checkbox" className="toggle" />
+                          </div>
                         </div>
                       </div>
                     </div>
+                  )}
 
-                    <div>
-                      <h4 className="font-medium mb-3">Daily refresh credits</h4>
-                      <div className="bg-gray-50 rounded-lg p-4">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm">Refresh to 300 at 01:00 every day</span>
-                          <span className="text-sm font-medium">0</span>
+                  {activeTab === "usage" && (
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Usage & Credits</h3>
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm text-gray-600">Monthly Credits</span>
+                            <span className="text-sm font-medium">1,247 / 2,500</span>
+                          </div>
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div className="bg-[var(--aaron-accent)] h-2 rounded-full" style={{width: '49.88%'}}></div>
+                          </div>
+                          <div className="text-xs text-gray-500 mt-2">Resets in 12 days</div>
+                          
+                          <div className="grid grid-cols-3 gap-4 mt-4">
+                            <div className="text-center">
+                              <div className="text-lg font-semibold text-gray-900">156</div>
+                              <div className="text-xs text-gray-500">Tasks Completed</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-lg font-semibold text-gray-900">2.4s</div>
+                              <div className="text-xs text-gray-500">Avg Response</div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-lg font-semibold text-gray-900">98.2%</div>
+                              <div className="text-xs text-gray-500">Success Rate</div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
+
+                  {activeTab === "help" && (
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Help & Support</h3>
+                        <div className="space-y-2">
+                          <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div className="font-medium text-sm">Documentation</div>
+                            <div className="text-xs text-gray-500">Learn how to use AaronOS effectively</div>
+                          </button>
+                          <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div className="font-medium text-sm">Contact Support</div>
+                            <div className="text-xs text-gray-500">Get help from our team</div>
+                          </button>
+                          <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div className="font-medium text-sm">Feature Requests</div>
+                            <div className="text-xs text-gray-500">Suggest improvements to AaronOS</div>
+                          </button>
+                          <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div className="font-medium text-sm">Keyboard Shortcuts</div>
+                            <div className="text-xs text-gray-500">Learn productivity shortcuts</div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </DialogContent>
-          </Dialog>
-
-          <div className="bg-gray-700 rounded-lg p-3">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">U</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-white text-sm font-medium">Demo User</div>
-                <div className="text-gray-400 text-xs truncate">user@aaronos.com</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </Dialog>
       </div>
     </div>
   );
