@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useConversationStore } from "@/store/conversation";
 import AaronIcon from "@/components/aaron-icon";
 import { useAgentState } from "@/hooks/use-agent-state";
-import { MessageSquare, Settings, Plus, User, CreditCard, HelpCircle, Search, Edit } from "lucide-react";
+import { MessageSquare, Settings, Plus, User, CreditCard, HelpCircle, Search, Edit, MoreHorizontal, Edit2, Archive, Trash2 } from "lucide-react";
 import aaronOSLogo from "@assets/aaron OS Logo Light New@4x_1754411629245.png";
 
 export default function Sidebar() {
@@ -113,17 +114,48 @@ export default function Sidebar() {
 
       {/* Chat History */}
       <div className="flex-1 px-4 pb-4 overflow-y-hidden hover:overflow-y-auto slim-scrollbar">
-        <div className="space-y-2">
+        <div className="space-y-1">
           {chatHistory.map((chat) => (
-            <button
+            <div
               key={chat.id}
-              onClick={() => handleChatSelect(chat)}
-              className="w-full text-left p-2 rounded-lg hover:bg-gray-700 transition-colors group"
+              className="group flex items-center rounded-lg hover:bg-gray-700 transition-colors relative"
             >
-              <div className="text-sm text-white font-medium truncate">
+              <button
+                onClick={() => handleChatSelect(chat)}
+                className="flex-1 text-left px-3 py-2 text-sm text-white font-medium truncate"
+              >
                 {chat.title}
+              </button>
+              
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity pr-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 w-6 p-0 hover:bg-gray-600"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <MoreHorizontal size={14} className="text-gray-400" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-40">
+                    <DropdownMenuItem className="flex items-center gap-2">
+                      <Edit2 size={14} />
+                      Rename
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="flex items-center gap-2">
+                      <Archive size={14} />
+                      Archive
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="flex items-center gap-2 text-red-600">
+                      <Trash2 size={14} />
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
-            </button>
+            </div>
           ))}
         </div>
       </div>
