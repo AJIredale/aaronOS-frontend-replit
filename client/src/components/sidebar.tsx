@@ -118,18 +118,10 @@ export default function Sidebar() {
             <button
               key={chat.id}
               onClick={() => handleChatSelect(chat)}
-              className="w-full text-left p-3 rounded-lg hover:bg-gray-700 transition-colors group"
+              className="w-full text-left p-2 rounded-lg hover:bg-gray-700 transition-colors group"
             >
-              <div className="flex items-start gap-2">
-                <MessageSquare size={14} className="text-gray-400 mt-0.5 flex-shrink-0" />
-                <div className="min-w-0 flex-1">
-                  <div className="text-sm text-white font-medium truncate">
-                    {chat.title}
-                  </div>
-                  <div className="text-xs text-gray-400 truncate mt-1">
-                    {chat.lastMessage}
-                  </div>
-                </div>
+              <div className="text-sm text-white font-medium truncate">
+                {chat.title}
               </div>
             </button>
           ))}
