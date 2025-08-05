@@ -4,11 +4,13 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { useSocket } from "@/hooks/use-socket";
 import { useAgentState } from "@/hooks/use-agent-state";
+import { useActivityStore } from "@/store/activity";
 import { Clock, Activity, Database } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 export default function ActivityPanel() {
   const { agentStatus } = useAgentState();
+  const { terminalLines, actions, isActive } = useActivityStore();
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -28,28 +30,6 @@ export default function ActivityPanel() {
     }
   };
 
-  const demoTerminalLines = [
-    "$ npx create-react-app webapp --template typescript",
-    "✓ Created new React TypeScript project",
-    "$ cd webapp && npm install @auth0/auth0-react",
-    "✓ Installing authentication packages...",
-    "$ npm install @headlessui/react @tailwindcss/forms",
-    "✓ Setting up UI components...",
-    "$ mkdir src/components/dashboard",
-    "✓ Creating dashboard structure...",
-    "$ npm run build",
-    "✓ Build completed successfully",
-  ];
-
-  const demoActions = [
-    { action: "Analyzed project requirements", time: "30s ago", status: "completed" },
-    { action: "Generated authentication setup", time: "25s ago", status: "completed" },
-    { action: "Creating dashboard components", time: "20s ago", status: "in-progress" },
-    { action: "Installing dependencies", time: "15s ago", status: "in-progress" },
-    { action: "Setting up routing", time: "10s ago", status: "pending" },
-    { action: "Deploying to production", time: "5s ago", status: "pending" },
-  ];
-
   return (
     <div className="w-96 border-l border-gray-200 bg-gray-50 flex flex-col">
       <div className="p-4 border-b border-gray-200 bg-white flex-shrink-0">
@@ -64,13 +44,13 @@ export default function ActivityPanel() {
             <Activity size={16} />
             Terminal
           </h4>
-          <div className="bg-black rounded-lg p-3 font-mono text-xs">
-            {demoTerminalLines.map((line, index) => (
+          <div className="bg-black rounded-lg p-3 font-mono text-xs max-h-48 overflow-y-auto">
+            {terminalLines.map((line, index) => (
               <div key={index} className={`mb-1 ${line.startsWith('$') ? 'text-green-400' : 'text-gray-300'}`}>
                 {line}
               </div>
             ))}
-            <div className="text-green-400 animate-pulse">$ █</div>
+            {isActive && <div className="text-green-400 animate-pulse">$ █</div>}
           </div>
         </Card>
 
@@ -81,7 +61,7 @@ export default function ActivityPanel() {
             Actions
           </h4>
           <div className="space-y-2">
-            {demoActions.map((action, index) => (
+            {actions.map((action, index) => (
               <div key={index} className="flex items-center justify-between text-xs">
                 <span className="flex-1 truncate text-gray-700">{action.action}</span>
                 <div className="flex items-center gap-2 flex-shrink-0">

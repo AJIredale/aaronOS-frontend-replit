@@ -50,7 +50,18 @@ export default function CommandBar() {
       return;
     }
 
-    sendMessageMutation.mutate(content);
+    // Add user message first
+    addMessage({
+      id: Date.now().toString(),
+      conversationId: "default",
+      role: "user",
+      content,
+      timestamp: new Date(),
+      metadata: {}
+    });
+
+    // Trigger demo activity instead of real API call
+    useConversationStore.getState().triggerDemo();
   };
 
   const handleSlashCommand = async (command: string) => {
