@@ -101,7 +101,7 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation Options */}
-      <div className="px-4 py-3 space-y-1">
+      <div className="px-4 py-2 space-y-1">
         <button 
           onClick={handleNewChat}
           className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)] hover:scale-[1.02]"
@@ -121,14 +121,14 @@ export default function Sidebar() {
 
       {/* Divider and Recent Work Label */}
       <div className="px-4">
-        <div className="border-t border-gray-700 opacity-30 mb-3"></div>
-        <div className="mb-3">
+        <div className="border-t border-gray-700 opacity-30 mb-2"></div>
+        <div className="mb-2">
           <span className="text-xs text-gray-500 font-medium">Recent Work</span>
         </div>
       </div>
 
       {/* Chat History */}
-      <div className="flex-1 px-4 pb-4 overflow-y-hidden hover:overflow-y-auto slim-scrollbar">
+      <div className="flex-1 px-4 pb-2 overflow-y-hidden hover:overflow-y-auto slim-scrollbar">
         <div className="space-y-1">
           {chatHistory.map((chat) => (
             <div
@@ -180,9 +180,9 @@ export default function Sidebar() {
       </div>
 
       {/* Groups Section */}
-      <div className="px-4 mb-4">
-        <div className="border-t border-gray-700 opacity-30 mb-3"></div>
-        <div className="flex items-center justify-between mb-3">
+      <div className="px-4 mb-2">
+        <div className="border-t border-gray-700 opacity-30 mb-2"></div>
+        <div className="flex items-center justify-between mb-2">
           <span className="text-xs text-gray-500 font-medium">Recurring Tasks</span>
           <button className="w-4 h-4 rounded-full border border-gray-500 flex items-center justify-center text-gray-500 hover:text-white hover:border-white transition-all duration-200 ease-in-out hover:scale-110">
             <Plus size={10} />
