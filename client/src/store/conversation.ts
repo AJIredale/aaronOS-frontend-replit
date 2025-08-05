@@ -12,7 +12,24 @@ interface ConversationState {
 }
 
 export const useConversationStore = create<ConversationState>((set) => ({
-  messages: [],
+  messages: [
+    {
+      id: "demo-user",
+      conversationId: "default", 
+      role: "user",
+      content: "Help me build a modern web application with user authentication and a dashboard",
+      timestamp: new Date(Date.now() - 30000),
+      metadata: {}
+    },
+    {
+      id: "demo-aaron",
+      conversationId: "default",
+      role: "assistant", 
+      content: "Sure! Let's get started on this task for you. I'll help you build a modern web application with authentication and dashboard functionality. Let me analyze the requirements and begin setting up the project structure.",
+      timestamp: new Date(Date.now() - 25000),
+      metadata: {}
+    }
+  ],
   isTyping: false,
   currentConversationId: "default",
   
@@ -23,7 +40,24 @@ export const useConversationStore = create<ConversationState>((set) => ({
     
   clearMessages: () =>
     set(() => ({
-      messages: [],
+      messages: [
+        {
+          id: "demo-user",
+          conversationId: "default", 
+          role: "user",
+          content: "Help me build a modern web application with user authentication and a dashboard",
+          timestamp: new Date(Date.now() - 30000),
+          metadata: {}
+        },
+        {
+          id: "demo-aaron",
+          conversationId: "default",
+          role: "assistant", 
+          content: "Sure! Let's get started on this task for you. I'll help you build a modern web application with authentication and dashboard functionality. Let me analyze the requirements and begin setting up the project structure.",
+          timestamp: new Date(Date.now() - 25000),
+          metadata: {}
+        }
+      ],
     })),
     
   setTyping: (typing) =>
