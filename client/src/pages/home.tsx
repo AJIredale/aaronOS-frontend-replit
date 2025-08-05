@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import Sidebar from "@/components/sidebar";
 import ChatPanel from "@/components/chat-panel";
-import ActivityPanel from "@/components/activity-panel";
 import { useSocket } from "@/hooks/use-socket";
 import { useAgentState } from "@/hooks/use-agent-state";
 
@@ -17,10 +16,7 @@ export default function Home() {
   return (
     <div className="flex h-screen bg-white overflow-hidden">
       <Sidebar />
-      <div className="flex-1 flex">
-        <ChatPanel />
-        <ActivityPanel />
-      </div>
+      <ChatPanel />
     </div>
   );
 }

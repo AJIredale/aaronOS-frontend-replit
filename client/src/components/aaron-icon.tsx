@@ -1,9 +1,27 @@
+import aaronLogoDark from "@assets/aaron logo dark@2x_1754410255295.png";
+import aaronLogoLight from "@assets/aaron logo light@2x_1754410255295.png";
+
 interface AaronIconProps {
   size?: number;
   className?: string;
+  variant?: "head" | "logo";
+  theme?: "light" | "dark";
 }
 
-export default function AaronIcon({ size = 24, className = "" }: AaronIconProps) {
+export default function AaronIcon({ size = 24, className = "", variant = "head", theme = "dark" }: AaronIconProps) {
+  if (variant === "logo") {
+    return (
+      <img 
+        src={theme === "dark" ? aaronLogoDark : aaronLogoLight}
+        alt="Aaron"
+        width={size * 3} // Logo is wider
+        height={size}
+        className={className}
+      />
+    );
+  }
+
+  // Head icon - simplified version of your logo's head
   return (
     <svg 
       width={size} 
@@ -13,20 +31,16 @@ export default function AaronIcon({ size = 24, className = "" }: AaronIconProps)
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      {/* Head silhouette */}
+      {/* Simplified head silhouette based on your logo */}
       <path 
-        d="M50 15C40 15 32 25 32 35C32 40 34 44 36 47C36 47 38 50 40 52C42 54 44 58 44 62V70C44 75 48 80 54 80H66C72 80 76 75 76 70V62C76 58 78 54 80 52C82 50 84 47 84 47C86 44 88 40 88 35C88 25 80 15 70 15H50Z" 
+        d="M25 45C25 25 40 15 50 15C60 15 75 25 75 45C75 50 73 55 70 58C70 60 68 65 65 70C60 75 55 80 50 80C45 80 40 75 35 70C32 65 30 60 30 58C27 55 25 50 25 45Z" 
         fill="currentColor"
       />
-      {/* Eyes */}
-      <circle cx="45" cy="38" r="3" fill="#1A1B23" />
-      <circle cx="65" cy="38" r="3" fill="#1A1B23" />
-      {/* Mouth */}
+      {/* Curved detail like in your logo */}
       <path 
-        d="M45 48C45 48 50 52 55 48" 
-        stroke="#1A1B23" 
-        strokeWidth="2" 
-        strokeLinecap="round"
+        d="M20 35C20 30 25 25 30 25C35 25 40 30 40 35C40 40 35 45 30 45C25 45 20 40 20 35Z" 
+        fill="currentColor"
+        opacity="0.8"
       />
     </svg>
   );

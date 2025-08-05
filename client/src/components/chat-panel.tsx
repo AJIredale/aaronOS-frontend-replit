@@ -34,28 +34,20 @@ export default function ChatPanel() {
   return (
     <div className="flex-1 flex flex-col">
       {/* Chat Header */}
-      <div className="p-6 border-b border-gray-200 bg-white flex-shrink-0">
+      <div className="p-4 border-b border-gray-200 bg-white flex-shrink-0">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">Conversation with Aaron</h2>
-            <p className="text-sm text-gray-500">Autonomous AI agent ready to help</p>
+            <h2 className="text-base font-medium text-gray-900" style={{ fontSize: '15px' }}>Aaron</h2>
+            <p className="text-xs text-gray-500">AI OS Agent</p>
           </div>
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleClearChat}
-              className="text-gray-700 hover:bg-gray-100"
-            >
-              Clear Chat
-            </Button>
-            <Button
-              size="sm"
-              className="bg-[var(--aaron-accent)] hover:bg-blue-600 text-white"
-            >
-              Export
-            </Button>
-          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleClearChat}
+            className="text-gray-600 hover:bg-gray-50 text-xs"
+          >
+            Clear
+          </Button>
         </div>
       </div>
 
@@ -63,13 +55,11 @@ export default function ChatPanel() {
       <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
         {messages.length === 0 && (
           <div className="flex items-center justify-center h-full">
-            <Card className="p-8 max-w-md text-center">
-              <AaronIcon size={48} className="mx-auto mb-4 text-gray-400" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Welcome to Aaron</h3>
-              <p className="text-gray-600">
-                I'm your AI OS orchestration agent. Ask me anything or give me a task to work on.
-              </p>
-            </Card>
+            <div className="text-center">
+              <AaronIcon size={40} className="mx-auto mb-3 text-gray-400" />
+              <h3 className="font-medium text-gray-900 mb-1" style={{ fontSize: '15px' }}>Good afternoon</h3>
+              <p className="text-gray-500 text-sm">How can I help you today?</p>
+            </div>
           </div>
         )}
 
@@ -88,27 +78,19 @@ export default function ChatPanel() {
             
             <div className={`flex-1 flex flex-col ${message.role === "user" ? "items-end" : ""}`}>
               <div
-                className={`rounded-xl p-4 max-w-3xl ${
+                className={`rounded-lg p-3 max-w-3xl ${
                   message.role === "user"
                     ? "bg-[var(--aaron-accent)] text-white"
                     : "bg-gray-50 text-gray-900"
                 }`}
               >
-                <p className="whitespace-pre-wrap">{message.content}</p>
+                <p className="whitespace-pre-wrap" style={{ fontSize: '15px', lineHeight: '1.5' }}>{message.content}</p>
               </div>
-              <div className="flex items-center gap-2 mt-2 text-xs text-gray-400">
+              <div className="flex items-center gap-1 mt-1 text-xs text-gray-400">
                 {message.role === "user" ? (
-                  <>
-                    <span>{formatDistanceToNow(message.timestamp || new Date(), { addSuffix: true })}</span>
-                    <span>•</span>
-                    <span>You</span>
-                  </>
+                  <span>You</span>
                 ) : (
-                  <>
-                    <span>Aaron</span>
-                    <span>•</span>
-                    <span>{formatDistanceToNow(message.timestamp || new Date(), { addSuffix: true })}</span>
-                  </>
+                  <span>Aaron</span>
                 )}
               </div>
             </div>
@@ -124,16 +106,18 @@ export default function ChatPanel() {
         {isTyping && (
           <div className="flex items-start gap-4">
             <div className="w-8 h-8 rounded-full bg-[var(--aaron-dark)] flex items-center justify-center flex-shrink-0 aaron-shimmer">
-              <AaronIcon size={20} className="text-white animate-pulse" />
+              <AaronIcon size={20} className="text-white" />
             </div>
             <div className="flex-1">
-              <div className="bg-gray-50 rounded-xl p-4 max-w-3xl">
-                <div className="typing-indicator">
-                  <div className="typing-dot"></div>
-                  <div className="typing-dot"></div>
-                  <div className="typing-dot"></div>
+              <div className="bg-gray-50 rounded-lg p-3 max-w-3xl">
+                <div className="flex items-center gap-2">
+                  <div className="typing-indicator">
+                    <div className="typing-dot"></div>
+                    <div className="typing-dot"></div>
+                    <div className="typing-dot"></div>
+                  </div>
+                  <span className="text-xs text-gray-500">thinking...</span>
                 </div>
-                <span className="ml-3 text-sm text-gray-500">Aaron is thinking...</span>
               </div>
             </div>
           </div>

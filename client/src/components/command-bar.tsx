@@ -7,11 +7,8 @@ import { useConversationStore } from "@/store/conversation";
 import { Send, Plus } from "lucide-react";
 
 const SLASH_COMMANDS = [
-  { command: "/flush", description: "Flush resolved context to memory" },
-  { command: "/pin", description: "Pin current context" },
-  { command: "/switch", description: "Switch project context" },
-  { command: "/status", description: "Show agent status" },
   { command: "/clear", description: "Clear conversation" },
+  { command: "/status", description: "Show agent status" },
 ];
 
 export default function CommandBar() {
@@ -60,17 +57,6 @@ export default function CommandBar() {
     const [cmd, ...args] = command.split(" ");
     
     switch (cmd) {
-      case "/flush":
-        await apiRequest("POST", "/api/flush/trigger");
-        addMessage({
-          id: Date.now().toString(),
-          conversationId: "default",
-          role: "system",
-          content: "Context flushed to memory successfully.",
-          timestamp: new Date(),
-          metadata: {}
-        });
-        break;
       case "/clear":
         useConversationStore.getState().clearMessages();
         break;
@@ -81,7 +67,7 @@ export default function CommandBar() {
           id: Date.now().toString(),
           conversationId: "default",
           role: "system",
-          content: `Agent Status: ${status.status}\nCurrent Task: ${status.currentTask || "None"}`,
+          content: `Status: ${status.status}${status.currentTask ? ` - ${status.currentTask}` : ""}`,
           timestamp: new Date(),
           metadata: {}
         });
@@ -91,7 +77,7 @@ export default function CommandBar() {
           id: Date.now().toString(),
           conversationId: "default",
           role: "system",
-          content: `Unknown command: ${cmd}. Try /help for available commands.`,
+          content: `Unknown command: ${cmd}`,
           timestamp: new Date(),
           metadata: {}
         });
@@ -178,8 +164,9 @@ export default function CommandBar() {
               value={input}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              placeholder="Message Aaron... (type / for commands)"
+              placeholder="Message Aaron..."
               className="min-h-[44px] max-h-[120px] resize-none pr-12 focus:ring-2 focus:ring-[var(--aaron-accent)] focus:border-transparent"
+              style={{ fontSize: '15px' }}
               disabled={sendMessageMutation.isPending}
             />
             

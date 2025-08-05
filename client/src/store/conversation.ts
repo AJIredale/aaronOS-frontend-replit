@@ -12,16 +12,7 @@ interface ConversationState {
 }
 
 export const useConversationStore = create<ConversationState>((set) => ({
-  messages: [
-    {
-      id: "welcome",
-      conversationId: "default",
-      role: "assistant",
-      content: "Hello! I'm Aaron, your AI OS orchestration agent. I can help you with complex tasks, automate workflows, and manage your digital environment. What would you like me to work on today?",
-      timestamp: new Date(),
-      metadata: { isWelcome: true }
-    }
-  ],
+  messages: [],
   isTyping: false,
   currentConversationId: "default",
   
@@ -32,14 +23,7 @@ export const useConversationStore = create<ConversationState>((set) => ({
     
   clearMessages: () =>
     set(() => ({
-      messages: [{
-        id: "welcome",
-        conversationId: "default",
-        role: "assistant", 
-        content: "Hello! I'm Aaron, your AI OS orchestration agent. I can help you with complex tasks, automate workflows, and manage your digital environment. What would you like me to work on today?",
-        timestamp: new Date(),
-        metadata: { isWelcome: true }
-      }],
+      messages: [],
     })),
     
   setTyping: (typing) =>
