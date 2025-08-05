@@ -147,9 +147,10 @@ export default function CommandBar() {
 
   return (
     <div className="p-6 border-t border-gray-200 bg-white">
-      <form onSubmit={handleSubmit} className="relative">
-        <div className="flex items-end gap-4">
-          <div className="flex-1 relative">
+      <div className="max-w-[770px] mx-auto">
+        <form onSubmit={handleSubmit} className="relative">
+          <div className="flex items-end gap-4">
+            <div className="flex-1 relative">
             {showCommands && filteredCommands.length > 0 && (
               <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
                 {filteredCommands.map((cmd, index) => (
@@ -208,7 +209,7 @@ export default function CommandBar() {
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
                 placeholder="Message Aaron..."
-                className="min-h-[44px] max-h-[120px] resize-none pl-12 pr-12 focus:ring-2 focus:ring-[var(--aaron-accent)] focus:border-transparent"
+                className="min-h-[44px] max-h-[120px] resize-none pl-12 pr-16 border-gray-200 focus:border-gray-300 focus:shadow-sm focus:ring-0"
                 style={{ fontSize: '15px' }}
                 disabled={sendMessageMutation.isPending}
               />
@@ -217,19 +218,24 @@ export default function CommandBar() {
             <Button
               type="submit"
               size="sm"
-              className="absolute right-3 bottom-3 h-8 w-8 p-0 bg-[var(--aaron-accent)] hover:bg-blue-600"
-              disabled={!input.trim() || sendMessageMutation.isPending}
+              className={`absolute right-3 bottom-3 h-8 w-8 p-0 rounded-full transition-colors ${
+                input.trim() 
+                  ? "bg-black hover:bg-gray-800 text-white" 
+                  : "bg-gray-300 hover:bg-gray-400 text-white"
+              }`}
+              disabled={sendMessageMutation.isPending}
             >
-              <Send size={16} />
+              <Send size={14} className="ml-0.5" />
             </Button>
           </div>
         </div>
         
-        <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
-          <span>Press Enter to send, Shift+Enter for new line</span>
-          <span>{input.length}/4000</span>
-        </div>
-      </form>
+          <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
+            <span>Press Enter to send, Shift+Enter for new line</span>
+            <span>{input.length}/4000</span>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -57,29 +57,21 @@ export default function ChatPanel() {
         {messages.length === 0 && (
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
-              <AaronIcon size={40} className="mx-auto mb-3 text-gray-400" />
-              <h3 className="font-medium text-gray-900 mb-1" style={{ fontSize: '15px' }}>Good afternoon</h3>
-              <p className="text-gray-500 text-sm">How can I help you today?</p>
+              <h3 className="font-medium text-gray-900 mb-1 text-2xl">Hi AJ, what can I handle for you?</h3>
             </div>
           </div>
         )}
 
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex items-start gap-4 ${
-              message.role === "user" ? "justify-end" : ""
-            }`}
-          >
-            {message.role === "assistant" && (
-              <div className="w-8 h-8 rounded-full bg-[var(--aaron-dark)] flex items-center justify-center flex-shrink-0">
-                <AaronIcon size={20} className="text-white" />
-              </div>
-            )}
-            
-            <div className={`flex-1 flex flex-col ${message.role === "user" ? "items-end" : ""}`}>
+        <div className="max-w-[770px] mx-auto">
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={`flex ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              }`}
+            >
               <div
-                className={`rounded-lg p-3 max-w-3xl ${
+                className={`rounded-lg p-3 max-w-2xl ${
                   message.role === "user"
                     ? "bg-[#f5f6f8] text-black"
                     : "bg-white text-black"
@@ -87,24 +79,14 @@ export default function ChatPanel() {
               >
                 <p className="whitespace-pre-wrap" style={{ fontSize: '15px', lineHeight: '1.5' }}>{message.content}</p>
               </div>
-
             </div>
-
-            {message.role === "user" && (
-              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
-                <span className="text-sm font-medium text-gray-600">U</span>
-              </div>
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
 
         {isTyping && (
-          <div className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">
-              <img src={aaronLogo} alt="Aaron" className="w-6 h-6" />
-            </div>
-            <div className="flex-1">
-              <div className="bg-white rounded-lg p-3 max-w-3xl">
+          <div className="max-w-[770px] mx-auto">
+            <div className="flex justify-start">
+              <div className="bg-white rounded-lg p-3 max-w-2xl">
                 <div className="flex items-center gap-2">
                   <img src={aaronLogo} alt="Aaron" className="w-4 h-4" />
                   <span className="text-sm text-gray-700">Aaron is thinking...</span>

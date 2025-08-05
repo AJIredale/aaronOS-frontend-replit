@@ -1,23 +1,87 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useConversationStore } from "@/store/conversation";
 import AaronIcon from "@/components/aaron-icon";
-import AgentStatus from "@/components/agent-status";
 import { useAgentState } from "@/hooks/use-agent-state";
-import { MessageSquare, Settings, Plus, User, CreditCard, HelpCircle } from "lucide-react";
+import { MessageSquare, Settings, Plus, User, CreditCard, HelpCircle, Search, Edit } from "lucide-react";
 import aaronOSLogo from "@assets/aaron OS Logo Light New@4x_1754411629245.png";
 
 export default function Sidebar() {
   const { agentStatus } = useAgentState();
   const [showSettings, setShowSettings] = useState(false);
+  const { clearMessages, setCurrentConversation } = useConversationStore();
 
   const chatHistory = [
-    { id: 1, title: "Build React Dashboard", lastMessage: "Dashboard complete with analytics..." },
-    { id: 2, title: "Debug API Issues", lastMessage: "Fixed CORS and authentication..." },
-    { id: 3, title: "Create User Interface", lastMessage: "Designed modern UI components..." },
-    { id: 4, title: "Database Migration", lastMessage: "Successfully migrated to PostgreSQL..." },
-    { id: 5, title: "Deploy Application", lastMessage: "Deployed to production environment..." },
+    { 
+      id: 1, 
+      title: "Build React Dashboard", 
+      lastMessage: "Dashboard complete with analytics...",
+      demoMessages: [
+        { role: "user", content: "Create a React dashboard with analytics charts and user management" },
+        { role: "assistant", content: "I'll create a comprehensive React dashboard with analytics charts, user management, and modern UI components." }
+      ]
+    },
+    { 
+      id: 2, 
+      title: "Create Google Sheets Automation", 
+      lastMessage: "Automated data scraping and sheet updates...",
+      demoMessages: [
+        { role: "user", content: "Build a system to scrape product data from websites and automatically update Google Sheets" },
+        { role: "assistant", content: "I'll create a web scraping automation that collects product data and updates your Google Sheets in real-time." }
+      ]
+    },
+    { 
+      id: 3, 
+      title: "Mobile App Development", 
+      lastMessage: "React Native app with authentication...",
+      demoMessages: [
+        { role: "user", content: "Develop a mobile app for task management with user authentication" },
+        { role: "assistant", content: "I'll build a React Native task management app with secure authentication and offline capabilities." }
+      ]
+    },
+    { 
+      id: 4, 
+      title: "Database Migration", 
+      lastMessage: "Successfully migrated to PostgreSQL...",
+      demoMessages: [
+        { role: "user", content: "Help me migrate my MySQL database to PostgreSQL with zero downtime" },
+        { role: "assistant", content: "I'll guide you through a zero-downtime migration from MySQL to PostgreSQL with data validation." }
+      ]
+    },
+    { 
+      id: 5, 
+      title: "API Integration", 
+      lastMessage: "Connected payment and email services...",
+      demoMessages: [
+        { role: "user", content: "Integrate Stripe payments and SendGrid email service into my app" },
+        { role: "assistant", content: "I'll integrate Stripe for payments and SendGrid for email notifications with proper error handling." }
+      ]
+    },
   ];
+
+  const handleNewChat = () => {
+    clearMessages();
+    setCurrentConversation("new-" + Date.now());
+  };
+
+  const handleChatSelect = (chat: any) => {
+    clearMessages();
+    setCurrentConversation(chat.id.toString());
+    // Add demo messages for the selected chat
+    chat.demoMessages.forEach((msg: any, index: number) => {
+      setTimeout(() => {
+        useConversationStore.getState().addMessage({
+          id: `demo-${chat.id}-${index}`,
+          conversationId: chat.id.toString(),
+          role: msg.role,
+          content: msg.content,
+          timestamp: new Date(),
+          metadata: {}
+        });
+      }, index * 100);
+    });
+  };
 
   return (
     <div className="w-64 bg-[var(--aaron-dark)] text-white flex flex-col border-r border-gray-800">
@@ -32,25 +96,28 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* Agent Status */}
-      <div className="p-4">
-        <AgentStatus />
-      </div>
-
-      {/* New Chat Button */}
-      <div className="px-4 mb-4">
-        <Button className="w-full justify-start gap-2 bg-gray-700 hover:bg-gray-600 text-white border-none">
-          <Plus size={16} />
-          New chat
-        </Button>
+      {/* Navigation Options */}
+      <div className="p-4 space-y-3">
+        <button 
+          onClick={handleNewChat}
+          className="w-full flex items-center gap-3 text-gray-300 hover:text-white transition-colors"
+        >
+          <Edit size={16} />
+          <span className="text-sm">New Task</span>
+        </button>
+        <button className="w-full flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+          <Search size={16} />
+          <span className="text-sm">Search Chat</span>  
+        </button>
       </div>
 
       {/* Chat History */}
-      <div className="flex-1 px-4 pb-4 overflow-y-auto">
+      <div className="flex-1 px-4 pb-4 overflow-y-hidden hover:overflow-y-auto slim-scrollbar">
         <div className="space-y-2">
           {chatHistory.map((chat) => (
             <button
               key={chat.id}
+              onClick={() => handleChatSelect(chat)}
               className="w-full text-left p-3 rounded-lg hover:bg-gray-700 transition-colors group"
             >
               <div className="flex items-start gap-2">

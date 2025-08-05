@@ -148,3 +148,21 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: hsl(20, 14.3%, 4.1%);
 }
+
+/* Slim dark scrollbar for sidebar */
+.slim-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.slim-scrollbar::-webkit-scrollbar-track {
+  background: rgba(55, 65, 81, 0.1);
+}
+
+.slim-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 2px;
+}
+
+.slim-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.5);
+}
