@@ -173,12 +173,12 @@ export default function Sidebar() {
           <DropdownMenuTrigger asChild>
             <Button 
               variant="ghost" 
-              className="w-full justify-between gap-3 text-white hover:text-white rounded-lg border-0 px-3 focus:outline-none focus:ring-0 focus:border-0 transition-all duration-200 ease-in-out hover:bg-opacity-80"
+              className="w-full justify-between gap-3 text-white hover:text-white rounded-lg border-0 px-3 focus:outline-none focus:ring-0 focus:border-0 transition-all duration-200 ease-in-out hover:bg-[rgb(37,46,59)]"
               style={{
                 paddingTop: "1.5rem",
                 paddingBottom: "1.5rem", 
                 minHeight: "50px",
-                backgroundColor: "rgb(37 46 59)"
+                backgroundColor: "transparent"
               }}
             >
               <div className="flex items-center gap-3">
