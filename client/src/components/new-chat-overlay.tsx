@@ -102,7 +102,14 @@ export default function NewChatOverlay({ onStartChat, onClose }: NewChatOverlayP
                         : "text-gray-500 hover:text-gray-700 hover:bg-gray-100"
                     }`}
                   >
-                    {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                    {isListening ? <MicOff size={16} /> : (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                        <path d="M19 10v1a7 7 0 0 1-14 0v-1" fill="none" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M12 18v4" fill="none" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M8 22h8" fill="none" stroke="currentColor" strokeWidth="2"/>
+                      </svg>
+                    )}
                   </Button>
                 )}
                 
@@ -131,11 +138,11 @@ export default function NewChatOverlay({ onStartChat, onClose }: NewChatOverlayP
                       {isRecording ? (
                         <Square size={12} />
                       ) : (
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
-                          <path d="M19 10v1a7 7 0 0 1-14 0v-1"/>
-                          <path d="M12 18v4"/>
-                          <path d="M8 22h8"/>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <rect x="6" y="10" width="1.5" height="4" rx="0.75"/>
+                          <rect x="9.25" y="8" width="1.5" height="8" rx="0.75"/>
+                          <rect x="12.5" y="6" width="1.5" height="12" rx="0.75"/>
+                          <rect x="15.75" y="8" width="1.5" height="8" rx="0.75"/>
                         </svg>
                       )}
                     </Button>
