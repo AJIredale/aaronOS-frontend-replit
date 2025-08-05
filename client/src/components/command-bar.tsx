@@ -170,7 +170,7 @@ export default function CommandBar() {
             </div>
           )}
           
-          <div className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+          <div className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow focus-within:shadow-md focus-within:border-gray-200">
             <div className="flex items-start p-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -209,7 +209,7 @@ export default function CommandBar() {
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   placeholder="Message Aaron..."
-                  className="min-h-[44px] max-h-[120px] resize-none border-0 bg-transparent text-base p-0 focus:ring-0 focus:outline-none"
+                  className="min-h-[44px] max-h-[120px] resize-none border-0 bg-transparent text-base p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   disabled={sendMessageMutation.isPending}
                 />
               </div>

@@ -195,14 +195,14 @@ export default function Sidebar() {
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               <User size={16} />
-              AJ Wilson
+              AJ Iredale
             </Button>
           </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+            <DialogContent className="max-w-5xl h-[600px] overflow-hidden">
               <DialogHeader>
                 <DialogTitle>Profile & Settings</DialogTitle>
               </DialogHeader>
-              <div className="flex">
+              <div className="flex h-full">
                 {/* Settings Sidebar */}
                 <div className="w-48 pr-6 border-r border-gray-200">
                   <div className="space-y-1">
@@ -231,6 +231,14 @@ export default function Sidebar() {
                       Usage
                     </button>
                     <button 
+                      onClick={() => setActiveTab("connected")}
+                      className={`w-full text-left px-3 py-2 text-sm rounded-lg ${
+                        activeTab === "connected" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                      }`}
+                    >
+                      Connected apps
+                    </button>
+                    <button 
                       onClick={() => setActiveTab("help")}
                       className={`w-full text-left px-3 py-2 text-sm rounded-lg ${
                         activeTab === "help" ? "text-gray-900 bg-gray-100" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
@@ -242,7 +250,7 @@ export default function Sidebar() {
                 </div>
 
                 {/* Settings Content */}
-                <div className="flex-1 pl-6">
+                <div className="flex-1 pl-6 overflow-y-auto">
                   {activeTab === "account" && (
                     <div className="space-y-6">
                       <div>
@@ -253,8 +261,8 @@ export default function Sidebar() {
                               <User size={32} className="text-white" />
                             </div>
                             <div>
-                              <div className="font-medium text-gray-900">AJ Wilson</div>
-                              <div className="text-sm text-gray-500">aj@example.com</div>
+                              <div className="font-medium text-gray-900">AJ Iredale</div>
+                              <div className="text-sm text-gray-500">ajeiredale@gmail.com</div>
                               <div className="text-xs text-[var(--aaron-accent)] mt-1">Core Plan</div>
                             </div>
                           </div>
@@ -266,13 +274,13 @@ export default function Sidebar() {
                             </div>
                             <div className="space-y-2">
                               <label className="text-sm font-medium text-gray-700">Last Name</label>
-                              <input type="text" defaultValue="Wilson" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                              <input type="text" defaultValue="Iredale" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                             </div>
                           </div>
                           
                           <div className="space-y-2">
                             <label className="text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" defaultValue="aj@example.com" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                            <input type="email" defaultValue="ajeiredale@gmail.com" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
                           </div>
                         </div>
                       </div>
@@ -337,6 +345,136 @@ export default function Sidebar() {
                               <div className="text-lg font-semibold text-gray-900">98.2%</div>
                               <div className="text-xs text-gray-500">Success Rate</div>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {activeTab === "connected" && (
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Connected apps</h3>
+                        
+                        {/* Search bar */}
+                        <div className="mb-6">
+                          <input 
+                            type="text" 
+                            placeholder="Search apps..." 
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </div>
+                        
+                        {/* Connected Apps List */}
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white text-sm font-medium">G</div>
+                              <div>
+                                <div className="font-medium text-sm">Google Drive</div>
+                                <div className="text-xs text-gray-500">Access and manage files from Google Drive</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm font-medium">O</div>
+                              <div>
+                                <div className="font-medium text-sm">Microsoft OneDrive</div>
+                                <div className="text-xs text-gray-500">Sync files from your OneDrive account</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center text-white text-sm font-medium">N</div>
+                              <div>
+                                <div className="font-medium text-sm">Notion</div>
+                                <div className="text-xs text-gray-500">Import pages and databases from Notion</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-white text-sm font-medium">S</div>
+                              <div>
+                                <div className="font-medium text-sm">Slack</div>
+                                <div className="text-xs text-gray-500">Send messages and notifications to Slack</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center text-white text-sm font-medium">G</div>
+                              <div>
+                                <div className="font-medium text-sm">Gmail</div>
+                                <div className="text-xs text-gray-500">Read and send emails through Gmail</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center text-white text-sm font-medium">S</div>
+                              <div>
+                                <div className="font-medium text-sm">Spotify</div>
+                                <div className="text-xs text-gray-500">Control music playback and playlists</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-blue-700 rounded-lg flex items-center justify-center text-white text-sm font-medium">D</div>
+                              <div>
+                                <div className="font-medium text-sm">Dropbox</div>
+                                <div className="text-xs text-gray-500">Access files stored in Dropbox</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-pink-500 rounded-lg flex items-center justify-center text-white text-sm font-medium">F</div>
+                              <div>
+                                <div className="font-medium text-sm">Figma</div>
+                                <div className="text-xs text-gray-500">Import designs and collaborate on Figma files</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center text-white text-sm font-medium">G</div>
+                              <div>
+                                <div className="font-medium text-sm">GitHub</div>
+                                <div className="text-xs text-gray-500">Access repositories and manage code</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white text-sm font-medium">T</div>
+                              <div>
+                                <div className="font-medium text-sm">Trello</div>
+                                <div className="text-xs text-gray-500">Manage boards and organize tasks</div>
+                              </div>
+                            </div>
+                            <Button variant="outline" size="sm">Connect</Button>
                           </div>
                         </div>
                       </div>
