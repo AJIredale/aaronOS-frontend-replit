@@ -2,7 +2,14 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
-import { insertMessageSchema, insertTaskSchema, insertMemoryShardSchema, insertAgentStatusSchema } from "@shared/schema";
+import { 
+  insertMessageSchema, 
+  insertTaskSchema, 
+  insertMemoryShardSchema, 
+  insertAgentStatusSchema,
+  insertTaskQueueSchema,
+  insertStatusPipelineSchema
+} from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
@@ -188,6 +195,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(shards);
     } catch (error) {
       res.status(500).json({ error: "Failed to get memory shards" });
+    }
+  });
+
+  // Task Queue endpoints
+  app.get("/api/task-queue", async (req, res) => {
+    try {
+      const taskQueue = await storage.getTaskQueue();
+      res.json(taskQueue);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get task queue" });
+    }
+  });
+
+  app.post("/api/task-queue", async (req, res) => {
+    try {
+      const taskData = insertTaskQueueSchema.parse(req.body);
+      const task = await storage.createTaskQueueItem(taskData);
+      broadcast({ type: "task_queue_updated", task });
+      res.json(task);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid task queue data" });
+    }
+  });
+
+  app.patch("/api/task-queue/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+      const task = await storage.updateTaskQueueItem(id, updates);
+      
+      if (!task) {
+        return res.status(404).json({ error: "Task queue item not found" });
+      }
+
+      broadcast({ type: "task_queue_updated", task });
+      res.json(task);
+    } catch (error) {
+      res.status(400).json({ error: "Failed to update task queue item" });
+    }
+  });
+
+  // Status Pipeline endpoints
+  app.get("/api/status-pipeline", async (req, res) => {
+    try {
+      const pipeline = await storage.getStatusPipeline();
+      res.json(pipeline);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get status pipeline" });
+    }
+  });
+
+  app.post("/api/status-pipeline", async (req, res) => {
+    try {
+      const pipelineData = insertStatusPipelineSchema.parse(req.body);
+      const pipeline = await storage.updateStatusPipeline(pipelineData);
+      broadcast({ type: "status_pipeline_updated", pipeline });
+      res.json(pipeline);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid status pipeline data" });
     }
   });
 

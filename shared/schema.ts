@@ -56,6 +56,28 @@ export const agentStatus = pgTable("agent_status", {
   metadata: jsonb("metadata"),
 });
 
+export const taskQueue = pgTable("task_queue", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: text("title").notNull(),
+  description: text("description"),
+  priority: integer("priority").default(1), // 1 = high, 2 = medium, 3 = low
+  status: text("status").notNull().default("queued"), // 'queued' | 'in_progress' | 'completed' | 'failed'
+  estimatedTime: integer("estimated_time"), // in minutes
+  createdAt: timestamp("created_at").defaultNow(),
+  startedAt: timestamp("started_at"),
+  completedAt: timestamp("completed_at"),
+  metadata: jsonb("metadata"),
+});
+
+export const statusPipeline = pgTable("status_pipeline", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  currentStage: text("current_stage").notNull().default("planning"), // 'planning' | 'doing' | 'testing' | 'done'
+  stages: jsonb("stages"), // Array of stage objects with progress
+  taskId: varchar("task_id"),
+  updatedAt: timestamp("updated_at").defaultNow(),
+  metadata: jsonb("metadata"),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({ id: true });
 export const insertConversationSchema = createInsertSchema(conversations).omit({ id: true, createdAt: true, updatedAt: true });
@@ -63,6 +85,8 @@ export const insertMessageSchema = createInsertSchema(messages).omit({ id: true,
 export const insertTaskSchema = createInsertSchema(tasks).omit({ id: true, createdAt: true, updatedAt: true });
 export const insertMemoryShardSchema = createInsertSchema(memoryShards).omit({ id: true, createdAt: true });
 export const insertAgentStatusSchema = createInsertSchema(agentStatus).omit({ id: true, lastActivity: true });
+export const insertTaskQueueSchema = createInsertSchema(taskQueue).omit({ id: true, createdAt: true, startedAt: true, completedAt: true });
+export const insertStatusPipelineSchema = createInsertSchema(statusPipeline).omit({ id: true, updatedAt: true });
 
 // Types
 export type User = typeof users.$inferSelect;
@@ -77,3 +101,7 @@ export type MemoryShard = typeof memoryShards.$inferSelect;
 export type InsertMemoryShard = z.infer<typeof insertMemoryShardSchema>;
 export type AgentStatus = typeof agentStatus.$inferSelect;
 export type InsertAgentStatus = z.infer<typeof insertAgentStatusSchema>;
+export type TaskQueueItem = typeof taskQueue.$inferSelect;
+export type InsertTaskQueueItem = z.infer<typeof insertTaskQueueSchema>;
+export type StatusPipeline = typeof statusPipeline.$inferSelect;
+export type InsertStatusPipeline = z.infer<typeof insertStatusPipelineSchema>;

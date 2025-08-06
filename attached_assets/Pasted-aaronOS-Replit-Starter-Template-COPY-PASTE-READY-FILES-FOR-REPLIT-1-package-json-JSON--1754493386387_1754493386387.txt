@@ -1,0 +1,662 @@
+aaronOS Replit Starter Template
+
+🚀 COPY-PASTE READY FILES FOR REPLIT
+
+1. package.json
+
+JSON
+
+
+{
+  "name": "aaronos-ui",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 3000",
+    "deploy": "npm run build && echo 'Build complete - ready for deployment'"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "axios": "^1.6.0",
+    "lucide-react": "^0.263.1",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-toast": "^1.1.5",
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.2.0",
+    "react-hook-form": "^7.48.0",
+    "date-fns": "^2.30.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vite": "^5.0.8"
+  }
+}
+
+
+2. vite.config.js
+
+JavaScript
+
+
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 3000,
+    strictPort: true
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu']
+        }
+      }
+    }
+  }
+})
+
+
+3. tailwind.config.js
+
+JavaScript
+
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{js,jsx}',
+    './components/**/*.{js,jsx}',
+    './app/**/*.{js,jsx}',
+    './src/**/*.{js,jsx}',
+  ],
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+        "fade-in": {
+          from: { opacity: 0, transform: "translateY(10px)" },
+          to: { opacity: 1, transform: "translateY(0)" },
+        },
+        "slide-in": {
+          from: { transform: "translateX(-100%)" },
+          to: { transform: "translateX(0)" },
+        }
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.3s ease-out",
+        "slide-in": "slide-in 0.3s ease-out",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+}
+
+
+4. postcss.config.js
+
+JavaScript
+
+
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+
+
+5. src/index.css
+
+CSS
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .aaron-gradient {
+    @apply bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800;
+  }
+  
+  .aaron-glass {
+    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/20;
+  }
+  
+  .aaron-shadow {
+    @apply shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50;
+  }
+}
+
+
+6. src/main.jsx
+
+JSX
+
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
+
+
+7. src/App.jsx
+
+JSX
+
+
+import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Layout from './components/layout/Layout'
+import ChatPage from './pages/ChatPage'
+import AgentPage from './pages/AgentPage'
+import SettingsPage from './pages/SettingsPage'
+import { chatService } from './services/chatService'
+import { Toaster } from './components/ui/toaster'
+import './App.css'
+
+function App() {
+  const [isConnected, setIsConnected] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Test API connection on app start
+    const testConnection = async () => {
+      try {
+        await chatService.healthCheck()
+        setIsConnected(true)
+        console.log('✅ Connected to aaronOS backend')
+      } catch (error) {
+        console.error('❌ Failed to connect to backend:', error)
+        setIsConnected(false)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    testConnection()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center aaron-gradient">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Connecting to Aaron...</p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <Router>
+      <div className="min-h-screen aaron-gradient">
+        <Layout isConnected={isConnected}>
+          <Routes>
+            <Route path="/" element={<ChatPage />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/chat/:id" element={<ChatPage />} />
+            <Route path="/agent" element={<AgentPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+          </Routes>
+        </Layout>
+        <Toaster />
+      </div>
+    </Router>
+  )
+}
+
+export default App
+
+
+8. src/services/api.js
+
+JavaScript
+
+
+import axios from 'axios';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.aaron.li';
+
+console.log('🔗 API Base URL:', API_BASE_URL);
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 15000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Request interceptor
+api.interceptors.request.use(
+  (config) => {
+    console.log(`🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`);
+    return config;
+  },
+  (error) => {
+    console.error('❌ API Request Error:', error);
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor
+api.interceptors.response.use(
+  (response) => {
+    console.log(`✅ API Response: ${response.status} ${response.config.url}`);
+    return response;
+  },
+  (error) => {
+    const message = error.response?.data?.message || error.message;
+    console.error('❌ API Response Error:', message);
+    
+    // Handle specific error cases
+    if (error.response?.status === 404) {
+      console.warn('🔍 Endpoint not found:', error.config.url);
+    } else if (error.response?.status >= 500) {
+      console.error('🔥 Server error detected');
+    }
+    
+    return Promise.reject(error);
+  }
+);
+
+export default api;
+
+
+9. src/services/chatService.js
+
+JavaScript
+
+
+import api from './api';
+
+export const chatService = {
+  // Get all chats
+  async getChats() {
+    try {
+      const response = await api.get('/api/chats');
+      return response.data;
+    } catch (error) {
+      console.error('Failed to fetch chats:', error);
+      throw error;
+    }
+  },
+
+  // Create new chat
+  async createChat(chatData = {}) {
+    try {
+      const defaultData = {
+        title: 'New Chat',
+        model: 'gpt-4o-mini',
+        provider: 'openai',
+        ...chatData
+      };
+      const response = await api.post('/api/chats', defaultData);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to create chat:', error);
+      throw error;
+    }
+  },
+
+  // Get specific chat
+  async getChat(id) {
+    try {
+      const response = await api.get(`/api/chats/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Failed to fetch chat ${id}:`, error);
+      throw error;
+    }
+  },
+
+  // Update chat
+  async updateChat(id, chatData) {
+    try {
+      const response = await api.put(`/api/chats/${id}`, chatData);
+      return response.data;
+    } catch (error) {
+      console.error(`Failed to update chat ${id}:`, error);
+      throw error;
+    }
+  },
+
+  // Delete chat
+  async deleteChat(id) {
+    try {
+      const response = await api.delete(`/api/chats/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Failed to delete chat ${id}:`, error);
+      throw error;
+    }
+  },
+
+  // Get available models
+  async getModels() {
+    try {
+      const response = await api.get('/api/models');
+      return response.data;
+    } catch (error) {
+      console.error('Failed to fetch models:', error);
+      throw error;
+    }
+  },
+
+  // Health check
+  async healthCheck() {
+    try {
+      const response = await api.get('/api/health');
+      return response.data;
+    } catch (error) {
+      console.error('Health check failed:', error);
+      throw error;
+    }
+  },
+
+  // Database check
+  async dbCheck() {
+    try {
+      const response = await api.get('/api/dbcheck');
+      return response.data;
+    } catch (error) {
+      console.error('Database check failed:', error);
+      throw error;
+    }
+  }
+};
+
+
+10. .env (Replit Secrets)
+
+Bash
+
+
+# Add these to Replit Secrets (not .env file)
+VITE_API_BASE_URL=https://api.aaron.li
+VITE_APP_NAME=aaronOS
+VITE_APP_VERSION=2.0.0
+VITE_ENVIRONMENT=development
+
+
+11. .gitignore
+
+Plain Text
+
+
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Production
+/dist
+/build
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Replit
+.replit
+replit.nix
+
+
+12. index.html
+
+HTML
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>aaronOS - AI Agent Platform</title>
+    <meta name="description" content="Aaron - Your Independent AI Agent" />
+    <style>
+      /* Prevent flash of unstyled content */
+      body {
+        margin: 0;
+        background: #fafafa;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      }
+      .dark body {
+        background: #0a0a0a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+
+
+
+
+🚀 QUICK START INSTRUCTIONS
+
+1. Create Replit Project
+
+1.
+Go to Replit.com
+
+2.
+Click "Create Repl"
+
+3.
+Choose "React" template
+
+4.
+Name it "aaronos-ui"
+
+2. Replace Files
+
+Copy-paste each file above into your Replit project, replacing the default files.
+
+3. Set Environment Variables
+
+1.
+Click the "Secrets" tab in Replit
+
+2.
+Add: VITE_API_BASE_URL = https://api.aaron.li
+
+4. Install & Run
+
+Bash
+
+
+npm install
+npm run dev
+
+
+5. Test Connection
+
+Open the app and check the browser console for:
+
+Plain Text
+
+
+✅ Connected to aaronOS backend
+
+
+
+
+
+You're ready to build the most beautiful AI agent UI! 🎨🤖
+
