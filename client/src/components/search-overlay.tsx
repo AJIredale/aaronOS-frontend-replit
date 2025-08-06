@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Search, X, MessageSquare, Calendar } from "lucide-react";
+import { Search, X, MessageSquare } from "lucide-react";
 
 interface SearchOverlayProps {
   isOpen: boolean;
@@ -143,8 +143,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
         <div className="flex-1 overflow-y-auto">
           {Object.entries(groupedResults).map(([dateGroup, results]) => (
             <div key={dateGroup} className="p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Calendar size={14} className="text-gray-400" />
+              <div className="mb-3">
                 <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
                   {dateGroup}
                 </span>
@@ -168,9 +167,6 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                         <div className="text-xs text-gray-500 line-clamp-2">
                           {highlightText(result.content, searchQuery)}
                         </div>
-                      </div>
-                      <div className="text-xs text-gray-400 flex-shrink-0">
-                        {result.date.slice(5)} {/* MM/DD format */}
                       </div>
                     </div>
                   </button>
