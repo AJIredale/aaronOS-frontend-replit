@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mic, Send, MicOff, Wand2 } from "lucide-react";
 import Sidebar from "@/components/sidebar";
-import ActivityPanel from "@/components/activity-panel";
 import { useConversationStore } from "@/store/conversation";
 
 export default function HomePage() {
@@ -84,27 +83,26 @@ export default function HomePage() {
     <div className="flex h-screen bg-white">
       <Sidebar />
       
-      {/* Main Content */}
-      <div className="flex-1 flex">
-        {/* Central Chat Area */}
-        <div className="flex-1 flex flex-col items-center justify-center p-8">
-          <div className="w-full max-w-2xl">
-            {/* Welcome Message */}
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-medium text-gray-900 mb-2">
-                What can I do for you?
-              </h1>
-            </div>
+      {/* Main Content - Full Width Without Activity Panel */}
+      <div className="flex-1 flex flex-col items-center justify-center p-8">
+        <div className="w-full max-w-2xl">
+          {/* Welcome Message */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-medium text-gray-900 mb-2">
+              What can I do for you?
+            </h1>
+          </div>
 
-            {/* Input Form */}
-            <form onSubmit={handleSubmit} className="relative">
-              <div className="relative flex items-center border border-gray-200 rounded-xl bg-white shadow-sm hover:shadow-md transition-shadow duration-200">
+          {/* Input Form - Copy exact styling from command-bar */}
+          <form onSubmit={handleSubmit} className="relative">
+            <div className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow focus-within:shadow-md focus-within:border-gray-200">
+              <div className="flex items-center px-4 py-3 gap-3">
                 <Input
                   type="text"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Ask anything"
-                  className="flex-1 border-0 bg-transparent px-4 py-4 text-base focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="flex-1 border-0 bg-transparent text-base placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
                 
                 {/* Tools Button */}
@@ -112,51 +110,40 @@ export default function HomePage() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="mx-2 h-8 px-2 text-gray-500 hover:text-gray-700"
+                  className="flex items-center gap-1 text-gray-500 hover:text-gray-700 h-8 px-2"
                 >
                   <Wand2 size={16} />
-                  <span className="ml-1 text-sm">Tools</span>
+                  <span className="text-sm">Tools</span>
                 </Button>
 
-                {/* Voice/Send Button */}
-                <div className="flex items-center gap-2 mr-3">
+                {/* Divider */}
+                <div className="w-px h-6 bg-gray-200" />
+
+                {/* Voice Button */}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleVoice}
+                  className={`h-8 w-8 p-0 ${isListening ? 'text-red-500 hover:text-red-600' : 'text-gray-500 hover:text-gray-700'}`}
+                >
+                  {isListening ? <MicOff size={20} className="w-5 h-5" /> : <Mic size={20} className="w-5 h-5" />}
+                </Button>
+
+                {/* Send Button - Only show when there's text */}
+                {message.trim() && (
                   <Button
-                    type="button"
-                    variant="ghost"
+                    type="submit"
                     size="sm"
-                    onClick={toggleVoice}
-                    className={`h-8 w-8 p-0 ${isListening ? 'text-red-500 hover:text-red-600' : 'text-gray-500 hover:text-gray-700'}`}
+                    className="h-8 w-8 p-0 bg-gray-900 hover:bg-gray-800 text-white ml-1"
                   >
-                    {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                    <Send size={16} />
                   </Button>
-
-                  {message.trim() ? (
-                    <Button
-                      type="submit"
-                      size="sm"
-                      className="h-8 w-8 p-0 bg-gray-900 hover:bg-gray-800 text-white"
-                    >
-                      <Send size={14} />
-                    </Button>
-                  ) : (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={toggleVoice}
-                      className={`h-8 w-8 p-0 ${isListening ? 'text-red-500 hover:text-red-600' : 'text-gray-500 hover:text-gray-700'}`}
-                    >
-                      {isListening ? <MicOff size={16} /> : <Mic size={16} />}
-                    </Button>
-                  )}
-                </div>
+                )}
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
-
-        {/* Activity Panel */}
-        <ActivityPanel />
       </div>
     </div>
   );

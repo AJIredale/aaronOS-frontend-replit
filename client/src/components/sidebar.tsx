@@ -105,15 +105,16 @@ export default function Sidebar() {
 
       {/* Navigation Options */}
       <div className="px-4 py-2 space-y-1">
-        <button 
-          onClick={handleNewChat}
-          className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)]"
-        >
-          <div className="w-4 h-4 rounded-full border border-current flex items-center justify-center transition-all duration-200 ease-in-out">
-            <Plus size={10} />
-          </div>
-          <span className="text-sm">New Task</span>
-        </button>
+        <Link href="/">
+          <button 
+            className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)]"
+          >
+            <div className="w-4 h-4 rounded-full border border-current flex items-center justify-center transition-all duration-200 ease-in-out">
+              <Plus size={10} />
+            </div>
+            <span className="text-sm">New Task</span>
+          </button>
+        </Link>
         <button 
           onClick={() => setShowSearch(true)}
           className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)]"
