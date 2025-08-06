@@ -5,6 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useConversationStore } from "@/store/conversation";
 import AaronIcon from "@/components/aaron-icon";
 import { useAgentState } from "@/hooks/use-agent-state";
+import SearchOverlay from "@/components/search-overlay";
 import { MessageSquare, Settings, Plus, User, CreditCard, HelpCircle, Search, Edit, MoreHorizontal, Edit2, Archive, Trash2, FolderPlus } from "lucide-react";
 import aaronOSLogo from "@assets/aaron OS Logo Light New@4x_1754411629245.png";
 
@@ -13,6 +14,7 @@ export default function Sidebar() {
   const [showSettings, setShowSettings] = useState(false);
   const [activeTab, setActiveTab] = useState("account");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const { clearMessages, setCurrentConversation } = useConversationStore();
 
   const chatHistory = [
@@ -112,6 +114,7 @@ export default function Sidebar() {
           <span className="text-sm">New Task</span>
         </button>
         <button 
+          onClick={() => setShowSearch(true)}
           className="w-full flex items-center gap-3 py-1.5 px-2 text-gray-300 hover:text-white transition-all duration-200 ease-in-out rounded-lg hover:bg-[rgb(37,46,59)]"
         >
           <Search size={16} className="transition-all duration-200 ease-in-out" />
@@ -310,6 +313,11 @@ export default function Sidebar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <SearchOverlay 
+          isOpen={showSearch} 
+          onClose={() => setShowSearch(false)} 
+        />
 
         <Dialog open={showSettings} onOpenChange={setShowSettings}>
           <DialogContent className="max-w-5xl h-[600px] overflow-hidden p-0">
