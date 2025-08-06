@@ -110,7 +110,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[600px] p-0 bg-white border border-gray-200 shadow-xl" hideCloseButton>
+      <DialogContent className="max-w-2xl min-h-[400px] max-h-[600px] h-[500px] p-0 bg-white border border-gray-200 shadow-xl sm:min-h-[500px] sm:h-[580px]" hideCloseButton>
         {/* Search Header */}
         <div className="flex items-center gap-3 p-4 border-b border-gray-100">
           <Search size={20} className="text-gray-400" />
@@ -140,7 +140,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
         )}
 
         {/* Search Results */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto min-h-0">
           {Object.entries(groupedResults).map(([dateGroup, results]) => (
             <div key={dateGroup} className="p-4">
               <div className="mb-3">
@@ -176,12 +176,14 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
           ))}
 
           {filteredResults.length === 0 && searchQuery && (
-            <div className="p-8 text-center">
-              <div className="text-gray-400 mb-2">
-                <Search size={24} className="mx-auto" />
-              </div>
-              <div className="text-sm text-gray-500">
-                No chats found for "{searchQuery}"
+            <div className="flex items-center justify-center h-full min-h-[300px]">
+              <div className="text-center">
+                <div className="text-gray-400 mb-2">
+                  <Search size={24} className="mx-auto" />
+                </div>
+                <div className="text-sm text-gray-500">
+                  No results for "{searchQuery}"
+                </div>
               </div>
             </div>
           )}
