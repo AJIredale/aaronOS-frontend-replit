@@ -11,6 +11,7 @@ interface ConversationState {
   setTyping: (typing: boolean) => void;
   setCurrentConversation: (id: string) => void;
   triggerDemo: () => void;
+  startNewConversation: (title: string, initialMessage: string) => string;
 }
 
 export const useConversationStore = create<ConversationState>((set) => ({
@@ -104,4 +105,23 @@ export const useConversationStore = create<ConversationState>((set) => ({
       
       return state;
     }),
+    
+  startNewConversation: (title: string, initialMessage: string) => {
+    const conversationId = `conv-${Date.now()}`;
+    set(() => ({
+      currentConversationId: conversationId,
+      messages: [
+        {
+          id: `msg-${Date.now()}`,
+          conversationId,
+          role: "user",
+          content: initialMessage,
+          timestamp: new Date(),
+          metadata: {}
+        }
+      ],
+      isDemoMode: false
+    }));
+    return conversationId;
+  },
 }));

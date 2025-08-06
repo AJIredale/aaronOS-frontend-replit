@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,7 +18,8 @@ import {
   Zap,
   Users,
   Server,
-  Globe
+  Globe,
+  ArrowLeft
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
@@ -60,6 +62,8 @@ interface ActivityLog {
 }
 
 export default function SystemPage() {
+  const [, setLocation] = useLocation();
+  
   // Mock data for system information
   const systemStatus: SystemStatus = {
     status: "healthy",
@@ -148,9 +152,20 @@ export default function SystemPage() {
         {/* Header */}
         <div className="flex-shrink-0 px-6 py-4 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold text-gray-900">System Status</h1>
-              <p className="text-sm text-gray-500 mt-1">Monitor system health, performance, and diagnostics</p>
+            <div className="flex items-center gap-4">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setLocation('/')}
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+              >
+                <ArrowLeft size={16} />
+                Back
+              </Button>
+              <div>
+                <h1 className="text-2xl font-semibold text-gray-900">System Status</h1>
+                <p className="text-sm text-gray-500 mt-1">Monitor system health, performance, and diagnostics</p>
+              </div>
             </div>
             <Button variant="outline" size="sm" className="flex items-center gap-2">
               <RefreshCw size={14} />

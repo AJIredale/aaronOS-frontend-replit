@@ -93,14 +93,14 @@ export default function Sidebar() {
     <div className="w-64 bg-[var(--aaron-dark)] text-white flex flex-col border-r border-gray-800">
       {/* Logo Section */}
       <div className="p-4 border-b border-gray-700">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <img 
             src={aaronOSLogo} 
             alt="AaronOS" 
             className="h-6 w-auto"
             style={{ height: "1.8rem", width: "auto" }}
           />
-        </div>
+        </Link>
       </div>
 
       {/* Navigation Options */}

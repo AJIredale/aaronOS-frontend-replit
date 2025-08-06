@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -118,10 +118,17 @@ export default function ActivityPanel() {
   };
 
   // Add event listeners for resize
-  if (typeof window !== 'undefined') {
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-  }
+  React.useEffect(() => {
+    if (isResizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+    
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing]);
 
   return (
     <div className="border-l border-gray-200 bg-gray-50 flex flex-col relative" style={{ width: `${panelWidth}px` }}>
@@ -140,10 +147,10 @@ export default function ActivityPanel() {
       <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
         {/* Live View (Terminal/Browser) - Only visible when active */}
         {(isActive || terminalLines.length > 0) && (
-          <Card className="p-4">
+          <Card className="p-3">
             <Button 
               variant="ghost" 
-              className="w-full justify-between p-3 h-auto hover:bg-gray-50 transition-colors duration-200"
+              className="w-full justify-between p-2 h-auto hover:bg-gray-50 transition-colors duration-200"
               onClick={() => setIsLiveViewOpen(!isLiveViewOpen)}
             >
               <h4 className="text-sm font-medium text-gray-900 flex items-center gap-2">
@@ -221,10 +228,10 @@ export default function ActivityPanel() {
         )}
 
         {/* Task Queue */}
-        <Card className="p-4">
+        <Card className="p-3">
           <Button 
             variant="ghost" 
-            className="w-full justify-between p-3 h-auto hover:bg-gray-50 transition-colors duration-200"
+            className="w-full justify-between p-2 h-auto hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setIsTaskQueueOpen(!isTaskQueueOpen)}
           >
             <h4 className="text-sm font-medium text-gray-900 flex items-center gap-2">
@@ -256,10 +263,10 @@ export default function ActivityPanel() {
         </Card>
 
         {/* Actions */}
-        <Card className="p-4">
+        <Card className="p-3">
           <Button 
             variant="ghost" 
-            className="w-full justify-between p-3 h-auto hover:bg-gray-50 transition-colors duration-200"
+            className="w-full justify-between p-2 h-auto hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setIsActionsOpen(!isActionsOpen)}
           >
             <h4 className="text-sm font-medium text-gray-900 flex items-center gap-2">
@@ -287,10 +294,10 @@ export default function ActivityPanel() {
         </Card>
 
         {/* Status Pipeline */}
-        <Card className="p-4">
+        <Card className="p-3">
           <Button 
             variant="ghost" 
-            className="w-full justify-between p-3 h-auto hover:bg-gray-50 transition-colors duration-200"
+            className="w-full justify-between p-2 h-auto hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setIsStatusPipelineOpen(!isStatusPipelineOpen)}
           >
             <h4 className="text-sm font-medium text-gray-900 flex items-center gap-2">
