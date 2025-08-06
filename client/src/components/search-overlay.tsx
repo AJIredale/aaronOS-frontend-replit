@@ -110,7 +110,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[600px] p-0 bg-white border border-gray-200 shadow-xl">
+      <DialogContent className="max-w-2xl max-h-[600px] p-0 bg-white border border-gray-200 shadow-xl" hideCloseButton>
         {/* Search Header */}
         <div className="flex items-center gap-3 p-4 border-b border-gray-100">
           <Search size={20} className="text-gray-400" />
