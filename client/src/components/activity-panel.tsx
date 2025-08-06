@@ -20,6 +20,9 @@ export default function ActivityPanel() {
   const [isTaskQueueOpen, setIsTaskQueueOpen] = useState(true);
   const [isActionsOpen, setIsActionsOpen] = useState(true);
   const [isStatusPipelineOpen, setIsStatusPipelineOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState("terminal");
+  const [panelWidth, setPanelWidth] = useState(330); // Default 30px wider
+  const [isResizing, setIsResizing] = useState(false);
 
   // Fetch task queue data
   const { data: taskQueue = [] } = useQuery<TaskQueueItem[]>({
@@ -71,11 +74,11 @@ export default function ActivityPanel() {
 
   const getTaskStatusIcon = (status: string) => {
     switch (status) {
-      case "queued": return <Clock size={12} className="text-gray-400" />;
-      case "in_progress": return <PlayCircle size={12} className="text-blue-500" />;
-      case "completed": return <CheckCircle2 size={12} className="text-green-500" />;
-      case "failed": return <AlertCircle size={12} className="text-red-500" />;
-      default: return <Clock size={12} className="text-gray-400" />;
+      case "queued": return <div className="w-2 h-2 rounded-full border border-gray-300"></div>;
+      case "in_progress": return <Loader2 size={16} className="text-blue-500 animate-spin" />;
+      case "completed": return <Check size={16} className="text-green-500" />;
+      case "failed": return <AlertCircle size={16} className="text-red-500" />;
+      default: return <div className="w-2 h-2 rounded-full border border-gray-300"></div>;
     }
   };
 
@@ -99,8 +102,36 @@ export default function ActivityPanel() {
     return "pending";
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsResizing(true);
+    e.preventDefault();
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isResizing) return;
+    const newWidth = window.innerWidth - e.clientX;
+    setPanelWidth(Math.max(280, Math.min(500, newWidth)));
+  };
+
+  const handleMouseUp = () => {
+    setIsResizing(false);
+  };
+
+  // Add event listeners for resize
+  if (typeof window !== 'undefined') {
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+  }
+
   return (
-    <div className="w-96 border-l border-gray-200 bg-gray-50 flex flex-col">
+    <div className="border-l border-gray-200 bg-gray-50 flex flex-col relative" style={{ width: `${panelWidth}px` }}>
+      {/* Resize handle */}
+      <div 
+        className="absolute left-0 top-0 w-1 h-full cursor-col-resize hover:bg-blue-400 transition-colors duration-200 z-10"
+        onMouseDown={handleMouseDown}
+        style={{ backgroundColor: isResizing ? '#60a5fa' : 'transparent' }}
+      />
+      
       <div className="p-4 border-b border-gray-200 bg-white flex-shrink-0">
         <h3 className="font-semibold text-gray-900">Aaron's Activity</h3>
         <p className="text-sm text-gray-500">Real-time task execution</p>
@@ -112,7 +143,7 @@ export default function ActivityPanel() {
           <Card className="p-4">
             <Button 
               variant="ghost" 
-              className="w-full justify-between p-0 h-auto hover:bg-transparent"
+              className="w-full justify-between p-3 h-auto hover:bg-gray-50 transition-colors duration-200"
               onClick={() => setIsLiveViewOpen(!isLiveViewOpen)}
             >
               <h4 className="text-sm font-medium text-gray-900 flex items-center gap-2">
@@ -126,41 +157,63 @@ export default function ActivityPanel() {
                 <div className="flex rounded-lg border border-gray-200 overflow-hidden">
                   <button 
                     className={`flex-1 px-3 py-2 text-sm font-medium flex items-center justify-center gap-1 transition-colors ${
-                      'bg-white text-gray-900'
+                      activeTab === 'terminal' ? 'bg-white text-gray-900' : 'bg-gray-100 text-gray-600'
                     }`}
+                    onClick={() => setActiveTab('terminal')}
                   >
                     <Terminal size={12} />
                     Terminal
                   </button>
                   <button 
                     className={`flex-1 px-3 py-2 text-sm font-medium flex items-center justify-center gap-1 transition-colors ${
-                      'bg-gray-100 text-gray-600'
+                      activeTab === 'browser' ? 'bg-white text-gray-900' : 'bg-gray-100 text-gray-600'
                     }`}
+                    onClick={() => setActiveTab('browser')}
                   >
                     <Globe size={12} />
                     Browser
                   </button>
                 </div>
                 <div className="mt-3">
-                  <div className="rounded-lg p-3 font-mono text-xs max-h-48 overflow-y-auto" style={{
-                    backgroundColor: 'rgb(19 24 42)',
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none'
-                  }}>
-                    <style>{`
-                      .terminal-scroll::-webkit-scrollbar {
-                        display: none;
-                      }
-                    `}</style>
-                    <div className="terminal-scroll">
-                      {terminalLines.slice(-8).map((line, index) => (
-                        <div key={index} className={`mb-1 ${line.startsWith('$') ? 'text-green-400' : 'text-gray-300'}`}>
-                          {line}
-                        </div>
-                      ))}
-                      {isActive && <div className="text-green-400 animate-pulse">$ █</div>}
+                  {activeTab === 'terminal' ? (
+                    <div className="rounded-lg p-3 font-mono text-xs max-h-48 overflow-y-auto" style={{
+                      backgroundColor: 'rgb(19 24 42)',
+                      scrollbarWidth: 'none',
+                      msOverflowStyle: 'none'
+                    }}>
+                      <style>{`
+                        .terminal-scroll::-webkit-scrollbar {
+                          display: none;
+                        }
+                      `}</style>
+                      <div className="terminal-scroll">
+                        {terminalLines.slice(-8).map((line, index) => (
+                          <div key={index} className={`mb-1 ${line.startsWith('$') ? 'text-green-400' : 'text-gray-300'}`}>
+                            {line}
+                          </div>
+                        ))}
+                        {isActive && <div className="text-green-400 animate-pulse">$ █</div>}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="rounded-lg border border-gray-200 bg-white p-3 max-h-48 overflow-y-auto">
+                      <div className="space-y-2 text-xs">
+                        <div className="flex items-center gap-2 text-gray-500">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <span>https://docs.example.com/api</span>
+                        </div>
+                        <div className="bg-gray-50 p-2 rounded font-mono text-xs">
+                          <div className="text-blue-600">GET /api/v1/users</div>
+                          <div className="text-gray-500 mt-1">Status: 200 OK</div>
+                          <div className="text-gray-500">Response time: 142ms</div>
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-500 mt-3">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                          <span>Browsing documentation...</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -171,7 +224,7 @@ export default function ActivityPanel() {
         <Card className="p-4">
           <Button 
             variant="ghost" 
-            className="w-full justify-between p-0 h-auto hover:bg-transparent"
+            className="w-full justify-between p-3 h-auto hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setIsTaskQueueOpen(!isTaskQueueOpen)}
           >
             <h4 className="text-sm font-medium text-gray-900 flex items-center gap-2">
@@ -182,36 +235,18 @@ export default function ActivityPanel() {
           </Button>
           {isTaskQueueOpen && (
             <div className="mt-3">
-              <div className="space-y-2 max-h-64 overflow-y-auto">
+              <div className="space-y-3 max-h-64 overflow-y-auto">
                 {taskQueue.length === 0 ? (
                   <div className="text-center py-4 text-gray-500 text-sm">
                     No tasks in queue
                   </div>
                 ) : (
                   taskQueue.map((task) => (
-                    <div key={task.id} className="flex items-center gap-3 p-2 border border-gray-100 rounded-lg hover:bg-gray-50 transition-colors duration-200">
-                      <div className="flex-shrink-0">
+                    <div key={task.id} className="flex items-center gap-3 text-sm">
+                      <div className="flex-shrink-0 w-4 h-4 flex items-center justify-center">
                         {getTaskStatusIcon(task.status)}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-900 truncate">
-                            {task.title}
-                          </span>
-                          <Badge variant="outline" className={`text-xs px-1 ${getPriorityColor(task.priority || 2)}`}>
-                            P{task.priority || 2}
-                          </Badge>
-                        </div>
-                        <div className="flex items-center gap-3 text-xs text-gray-500 mt-1">
-                          {task.estimatedTime && (
-                            <span className="flex items-center gap-1">
-                              <Clock size={8} />
-                              {task.estimatedTime}m
-                            </span>
-                          )}
-                          <span className="capitalize">{task.status.replace('_', ' ')}</span>
-                        </div>
-                      </div>
+                      <span className="flex-1 text-gray-700">{task.title}</span>
                     </div>
                   ))
                 )}
@@ -224,7 +259,7 @@ export default function ActivityPanel() {
         <Card className="p-4">
           <Button 
             variant="ghost" 
-            className="w-full justify-between p-0 h-auto hover:bg-transparent"
+            className="w-full justify-between p-3 h-auto hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setIsActionsOpen(!isActionsOpen)}
           >
             <h4 className="text-sm font-medium text-gray-900 flex items-center gap-2">
@@ -255,7 +290,7 @@ export default function ActivityPanel() {
         <Card className="p-4">
           <Button 
             variant="ghost" 
-            className="w-full justify-between p-0 h-auto hover:bg-transparent"
+            className="w-full justify-between p-3 h-auto hover:bg-gray-50 transition-colors duration-200"
             onClick={() => setIsStatusPipelineOpen(!isStatusPipelineOpen)}
           >
             <h4 className="text-sm font-medium text-gray-900 flex items-center gap-2">

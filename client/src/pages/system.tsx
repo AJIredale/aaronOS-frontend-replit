@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import Sidebar from "@/components/sidebar";
 import { 
   Activity, 
   Cpu, 
@@ -140,23 +141,26 @@ export default function SystemPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-screen bg-white">
-      {/* Header */}
-      <div className="flex-shrink-0 px-6 py-4 border-b border-gray-200">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-semibold text-gray-900">System Status</h1>
-            <p className="text-sm text-gray-500 mt-1">Monitor system health, performance, and diagnostics</p>
+    <div className="flex h-screen bg-white">
+      <Sidebar />
+      
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <div className="flex-shrink-0 px-6 py-4 border-b border-gray-200">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-semibold text-gray-900">System Status</h1>
+              <p className="text-sm text-gray-500 mt-1">Monitor system health, performance, and diagnostics</p>
+            </div>
+            <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <RefreshCw size={14} />
+              Refresh
+            </Button>
           </div>
-          <Button variant="outline" size="sm" className="flex items-center gap-2">
-            <RefreshCw size={14} />
-            Refresh
-          </Button>
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-6">
         {/* Status Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="p-4">
@@ -349,6 +353,7 @@ export default function SystemPage() {
             Real-time metrics, alerting, log aggregation, and automated healing capabilities are in development.
           </p>
         </Card>
+        </div>
       </div>
     </div>
   );
