@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -6,7 +7,7 @@ import { useConversationStore } from "@/store/conversation";
 import AaronIcon from "@/components/aaron-icon";
 import { useAgentState } from "@/hooks/use-agent-state";
 import SearchOverlay from "@/components/search-overlay";
-import { MessageSquare, Settings, Plus, User, CreditCard, HelpCircle, Search, Edit, MoreHorizontal, Edit2, Archive, Trash2, FolderPlus } from "lucide-react";
+import { MessageSquare, Settings, Plus, User, CreditCard, HelpCircle, Search, Edit, MoreHorizontal, Edit2, Archive, Trash2, FolderPlus, Monitor } from "lucide-react";
 import aaronOSLogo from "@assets/aaron OS Logo Light New@4x_1754411629245.png";
 
 export default function Sidebar() {
@@ -290,16 +291,12 @@ export default function Sidebar() {
               <Settings size={18} className="text-gray-500 transition-all duration-200 ease-in-out" />
               <span className="text-sm font-medium">Settings</span>
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out">
-              <div className="w-[18px] h-[18px] flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-500 transition-all duration-200 ease-in-out">
-                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                  <line x1="8" y1="21" x2="16" y2="21"/>
-                  <line x1="12" y1="17" x2="12" y2="21"/>
-                </svg>
-              </div>
-              <span className="text-sm font-medium">System</span>
-            </DropdownMenuItem>
+            <Link href="/system">
+              <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out">
+                <Monitor size={18} className="text-gray-500 transition-all duration-200 ease-in-out" />
+                <span className="text-sm font-medium">System</span>
+              </DropdownMenuItem>
+            </Link>
             <div className="border-t border-gray-200 my-1" />
             <DropdownMenuItem className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg cursor-pointer transition-all duration-200 ease-in-out">
               <div className="w-[18px] h-[18px] flex items-center justify-center">
