@@ -171,9 +171,7 @@ export default function ChatPanel() {
           }}
           onClick={handleQuote}
         >
-          <div className="bg-black text-white rounded-md p-1">
-            <Quote size={12} />
-          </div>
+          <Quote size={14} className="text-black" />
           <span className="text-sm font-medium">Quote</span>
         </div>
       )}

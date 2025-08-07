@@ -67,6 +67,17 @@
     height: 100%;
     overflow: hidden;
   }
+  
+  /* Custom text selection color to match GPT */
+  ::selection {
+    background-color: #baddfb;
+    color: #000000;
+  }
+  
+  ::-moz-selection {
+    background-color: #baddfb;
+    color: #000000;
+  }
 }
 
 @layer utilities {
