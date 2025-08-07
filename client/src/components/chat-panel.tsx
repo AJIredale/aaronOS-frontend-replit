@@ -120,10 +120,6 @@ export default function ChatPanel() {
                 {/* Show quoted text for user messages */}
                 {message.role === "user" && message.metadata?.quotedText && (
                   <div className="mb-2 opacity-60">
-                    <div className="flex items-center gap-1 text-xs text-gray-500 mb-1">
-                      <Quote size={10} />
-                      <span>Replying to</span>
-                    </div>
                     <div className="pl-3 border-l-2 border-gray-300 text-sm text-gray-600 italic">
                       "{message.metadata.quotedText}"
                     </div>
@@ -168,15 +164,17 @@ export default function ChatPanel() {
       {/* Quote Button */}
       {showQuoteButton && (
         <div
-          className="fixed z-50 bg-gray-800 text-white rounded-lg px-3 py-2 shadow-lg flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors"
+          className="fixed z-50 bg-white text-black rounded-xl px-3 py-2 shadow-lg border border-gray-200 flex items-center gap-2 cursor-pointer hover:bg-gray-50 transition-colors"
           style={{
             left: quoteButtonPosition.x - 40,
             top: quoteButtonPosition.y,
           }}
           onClick={handleQuote}
         >
-          <Quote size={14} />
-          <span className="text-sm">Quote</span>
+          <div className="bg-black text-white rounded-md p-1">
+            <Quote size={12} />
+          </div>
+          <span className="text-sm font-medium">Quote</span>
         </div>
       )}
 

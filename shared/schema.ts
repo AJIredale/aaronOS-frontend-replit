@@ -23,7 +23,7 @@ export const messages = pgTable("messages", {
   role: text("role").notNull(), // 'user' | 'assistant' | 'system'
   content: text("content").notNull(),
   timestamp: timestamp("timestamp").defaultNow(),
-  metadata: jsonb("metadata"), // For storing additional message data
+  metadata: jsonb("metadata").$type<{ quotedText?: string }>(), // For storing additional message data
 });
 
 export const tasks = pgTable("tasks", {
