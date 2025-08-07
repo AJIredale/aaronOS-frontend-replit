@@ -86,17 +86,22 @@ export default function CommandBar() {
       return;
     }
 
-    // Add user message first with quoted content
+    // Add user message with quote metadata
     addMessage({
       id: Date.now().toString(),
       conversationId: "default",
       role: "user",
-      content: messageContent,
+      content: content,
       timestamp: new Date(),
-      metadata: {}
+      metadata: {
+        quotedText: isQuoting && quotedText ? quotedText : undefined
+      }
     });
 
     // Trigger demo activity instead of real API call
+    // In a real implementation, you would send the quoted context to the LLM:
+    // const contextualContent = isQuoting && quotedText ? 
+    //   `Responding to: "${quotedText}"\n\n${content}` : content;
     useConversationStore.getState().triggerDemo();
   };
 

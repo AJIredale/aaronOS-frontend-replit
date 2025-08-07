@@ -116,19 +116,34 @@ export default function ChatPanel() {
                 message.role === "user" ? "justify-end" : "justify-start"
               }`}
             >
-              <div
-                className={`rounded-lg p-3 max-w-2xl select-text ${
-                  message.role === "user"
-                    ? "bg-[#f5f6f8] text-black"
-                    : "bg-white text-black"
-                }`}
-                onMouseUp={() => {
-                  if (message.role === "assistant") {
-                    setTimeout(() => handleTextSelection(message.id), 10);
-                  }
-                }}
-              >
-                <p className="whitespace-pre-wrap" style={{ fontSize: '15px', lineHeight: '1.5' }}>{message.content}</p>
+              <div className="max-w-2xl">
+                {/* Show quoted text for user messages */}
+                {message.role === "user" && message.metadata?.quotedText && (
+                  <div className="mb-2 opacity-60">
+                    <div className="flex items-center gap-1 text-xs text-gray-500 mb-1">
+                      <Quote size={10} />
+                      <span>Replying to</span>
+                    </div>
+                    <div className="pl-3 border-l-2 border-gray-300 text-sm text-gray-600 italic">
+                      "{message.metadata.quotedText}"
+                    </div>
+                  </div>
+                )}
+                
+                <div
+                  className={`rounded-lg p-3 select-text ${
+                    message.role === "user"
+                      ? "bg-[#f5f6f8] text-black"
+                      : "bg-white text-black"
+                  }`}
+                  onMouseUp={() => {
+                    if (message.role === "assistant") {
+                      setTimeout(() => handleTextSelection(message.id), 10);
+                    }
+                  }}
+                >
+                  <p className="whitespace-pre-wrap" style={{ fontSize: '15px', lineHeight: '1.5' }}>{message.content}</p>
+                </div>
               </div>
             </div>
           ))}
