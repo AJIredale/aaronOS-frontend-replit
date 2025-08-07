@@ -6,13 +6,20 @@ import CommandBar from "@/components/command-bar";
 import AaronIcon from "@/components/aaron-icon";
 import { useSocket } from "@/hooks/use-socket";
 import { useConversationStore } from "@/store/conversation";
+import { useQuoteStore } from "@/store/quote";
 import { formatDistanceToNow } from "date-fns";
+import { Quote } from "lucide-react";
 import aaronLogo from "@assets/Asset 14@4x_1754418674283.png";
 
 export default function ChatPanel() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { messages, isTyping, addMessage } = useConversationStore();
+  const { setQuote } = useQuoteStore();
   const { lastMessage } = useSocket();
+  const [showQuoteButton, setShowQuoteButton] = useState(false);
+  const [selectedText, setSelectedText] = useState("");
+  const [selectedMessageId, setSelectedMessageId] = useState("");
+  const [quoteButtonPosition, setQuoteButtonPosition] = useState({ x: 0, y: 0 });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -31,6 +38,45 @@ export default function ChatPanel() {
   const handleClearChat = () => {
     useConversationStore.getState().clearMessages();
   };
+
+  const handleTextSelection = (messageId: string) => {
+    const selection = window.getSelection();
+    if (selection && selection.toString().trim().length > 0) {
+      const selectedText = selection.toString().trim();
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      
+      setSelectedText(selectedText);
+      setSelectedMessageId(messageId);
+      setQuoteButtonPosition({
+        x: rect.left + (rect.width / 2),
+        y: rect.top - 40
+      });
+      setShowQuoteButton(true);
+    } else {
+      setShowQuoteButton(false);
+    }
+  };
+
+  const handleQuote = () => {
+    if (selectedText && selectedMessageId) {
+      setQuote(selectedText, selectedMessageId);
+      setShowQuoteButton(false);
+      setSelectedText("");
+      setSelectedMessageId("");
+      // Clear selection
+      window.getSelection()?.removeAllRanges();
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setShowQuoteButton(false);
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   return (
     <div className="flex-1 flex flex-col">
@@ -71,11 +117,16 @@ export default function ChatPanel() {
               }`}
             >
               <div
-                className={`rounded-lg p-3 max-w-2xl ${
+                className={`rounded-lg p-3 max-w-2xl select-text ${
                   message.role === "user"
                     ? "bg-[#f5f6f8] text-black"
                     : "bg-white text-black"
                 }`}
+                onMouseUp={() => {
+                  if (message.role === "assistant") {
+                    setTimeout(() => handleTextSelection(message.id), 10);
+                  }
+                }}
               >
                 <p className="whitespace-pre-wrap" style={{ fontSize: '15px', lineHeight: '1.5' }}>{message.content}</p>
               </div>
@@ -98,6 +149,21 @@ export default function ChatPanel() {
 
         <div ref={messagesEndRef} />
       </div>
+
+      {/* Quote Button */}
+      {showQuoteButton && (
+        <div
+          className="fixed z-50 bg-gray-800 text-white rounded-lg px-3 py-2 shadow-lg flex items-center gap-2 cursor-pointer hover:bg-gray-700 transition-colors"
+          style={{
+            left: quoteButtonPosition.x - 40,
+            top: quoteButtonPosition.y,
+          }}
+          onClick={handleQuote}
+        >
+          <Quote size={14} />
+          <span className="text-sm">Quote</span>
+        </div>
+      )}
 
       {/* Command Input */}
       <div className="flex-shrink-0">

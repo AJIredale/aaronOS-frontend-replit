@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { apiRequest } from "@/lib/api";
 import { useConversationStore } from "@/store/conversation";
-import { Send, Plus, Paperclip, FileText, Image, Code, Database, Mic, MicOff, Square } from "lucide-react";
+import { useQuoteStore } from "@/store/quote";
+import { Send, Plus, Paperclip, FileText, Image, Code, Database, Mic, MicOff, Square, X, Quote } from "lucide-react";
 import { useVoiceInput } from "@/hooks/use-voice-input";
 import { useVoiceRecording } from "@/hooks/use-voice-recording";
 
@@ -21,6 +22,7 @@ export default function CommandBar() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const queryClient = useQueryClient();
   const { addMessage, setTyping } = useConversationStore();
+  const { quotedText, isQuoting, clearQuote } = useQuoteStore();
 
   // Voice input integration
   const { isListening, isSupported: voiceSupported, transcript, toggleListening } = useVoiceInput({
@@ -180,6 +182,28 @@ export default function CommandBar() {
   return (
     <div className="p-6 border-t border-gray-200 bg-white">
       <div className="max-w-[770px] mx-auto">
+        {/* Quoted Content */}
+        {isQuoting && quotedText && (
+          <div className="mb-4 p-3 bg-gray-50 border-l-4 border-gray-300 rounded-r-lg">
+            <div className="flex items-start justify-between">
+              <div className="flex items-start gap-2 flex-1">
+                <Quote size={14} className="text-gray-500 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-gray-700 leading-relaxed">
+                  "{quotedText}"
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={clearQuote}
+                className="h-6 w-6 p-0 hover:bg-gray-200 ml-2 flex-shrink-0"
+              >
+                <X size={12} />
+              </Button>
+            </div>
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="relative">
           {showCommands && filteredCommands.length > 0 && (
             <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
