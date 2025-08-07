@@ -174,6 +174,31 @@
   border-radius: 2px;
 }
 
+/* GPT-style textarea placeholder centering */
+.gpt-textarea {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+}
+
+.gpt-textarea::placeholder {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
+}
+
+.gpt-textarea:focus::placeholder {
+  opacity: 0.4;
+}
+
+/* Ensure textarea content is properly aligned */
+.gpt-textarea-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .slim-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(156, 163, 175, 0.5);
 }

@@ -187,18 +187,24 @@ export default function CommandBar() {
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
-      // Reset height to auto to get accurate scrollHeight
+      // Reset height to calculate actual needed height
       textarea.style.height = "auto";
       
-      // Calculate new height based on content, with GPT-like max height
-      const newHeight = Math.min(textarea.scrollHeight, 200); // Max ~8 lines like GPT
+      // Set minimum height for single line (like GPT's 36px)
+      const minHeight = 36;
+      const maxHeight = 200; // Max height for multiple lines
+      
+      // Calculate required height based on scroll height
+      const scrollHeight = textarea.scrollHeight;
+      const newHeight = Math.max(minHeight, Math.min(scrollHeight, maxHeight));
+      
       textarea.style.height = newHeight + "px";
       
-      // Update the container min-height dynamically
-      const container = textarea.closest('[class*="min-h-"]');
+      // Update container height to match
+      const container = textarea.closest('.flex.items-center');
       if (container) {
-        const minHeight = Math.max(44, newHeight + 16); // 16px for padding
-        container.style.minHeight = minHeight + "px";
+        const containerHeight = Math.max(44, newHeight + 16); // Add padding
+        container.style.minHeight = containerHeight + "px";
       }
     }
   }, [input]);
@@ -251,7 +257,7 @@ export default function CommandBar() {
           )}
           
           <div className="relative bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-md transition-all duration-200 ease-out focus-within:shadow-md focus-within:border-gray-200">
-            <div className="flex items-center px-4 py-2 min-h-[44px] transition-all duration-200 ease-out">
+            <div className="flex items-center px-4 py-2 min-h-[52px] transition-all duration-200 ease-out">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -282,15 +288,19 @@ export default function CommandBar() {
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              <div className="flex-1 relative flex items-center">
+              <div className="flex-1 relative gpt-textarea-container">
                 <Textarea
                   ref={textareaRef}
                   value={input}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   placeholder="Message Aaron..."
-                  className="min-h-[20px] max-h-[200px] resize-none border-0 bg-transparent p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full overflow-hidden"
-                  style={{ fontSize: '0.95rem', lineHeight: '1.4' }}
+                  className="gpt-textarea min-h-[36px] max-h-[200px] resize-none border-0 bg-transparent p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full overflow-hidden"
+                  style={{ 
+                    fontSize: '0.95rem', 
+                    lineHeight: '1.4',
+                    height: '36px'
+                  }}
                   disabled={sendMessageMutation.isPending}
                 />
               </div>
