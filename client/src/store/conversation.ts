@@ -1,12 +1,26 @@
 import { create } from "zustand";
 import type { Message } from "@shared/schema";
 
+export interface ActivityIndicator {
+  id: string;
+  type: "thinking" | "working" | "completed" | "progress";
+  title: string;
+  subtitle?: string;
+  progress?: Array<{ name: string; completed: boolean }>;
+  timestamp: Date;
+}
+
 interface ConversationState {
   messages: Message[];
+  activities: ActivityIndicator[];
   isTyping: boolean;
   currentConversationId: string;
   isDemoMode: boolean;
   addMessage: (message: Message) => void;
+  addActivity: (activity: ActivityIndicator) => void;
+  updateActivity: (id: string, updates: Partial<ActivityIndicator>) => void;
+  removeActivity: (id: string) => void;
+  clearActivities: () => void;
   clearMessages: () => void;
   setTyping: (typing: boolean) => void;
   setCurrentConversation: (id: string) => void;
@@ -33,6 +47,7 @@ export const useConversationStore = create<ConversationState>((set) => ({
       metadata: {}
     }
   ],
+  activities: [],
   isTyping: false,
   currentConversationId: "default",
   isDemoMode: false,
@@ -40,6 +55,28 @@ export const useConversationStore = create<ConversationState>((set) => ({
   addMessage: (message) =>
     set((state) => ({
       messages: [...state.messages, message],
+    })),
+    
+  addActivity: (activity) =>
+    set((state) => ({
+      activities: [...state.activities, activity],
+    })),
+    
+  updateActivity: (id, updates) =>
+    set((state) => ({
+      activities: state.activities.map(activity =>
+        activity.id === id ? { ...activity, ...updates } : activity
+      ),
+    })),
+    
+  removeActivity: (id) =>
+    set((state) => ({
+      activities: state.activities.filter(activity => activity.id !== id),
+    })),
+    
+  clearActivities: () =>
+    set(() => ({
+      activities: [],
     })),
     
   clearMessages: () =>
@@ -62,6 +99,7 @@ export const useConversationStore = create<ConversationState>((set) => ({
           metadata: {}
         }
       ],
+      activities: [],
     })),
     
   setTyping: (typing) =>
@@ -76,32 +114,71 @@ export const useConversationStore = create<ConversationState>((set) => ({
     
   triggerDemo: () =>
     set((state) => {
-      // Import activity store dynamically
-      import("../store/activity").then(({ useActivityStore }) => {
-        // Start thinking state
+      // Start thinking state
+      setTimeout(() => {
+        set({ isTyping: true, isDemoMode: true });
+        
+        // Add thinking activity
+        const thinkingId = `activity-${Date.now()}`;
+        set((state) => ({
+          activities: [...state.activities, {
+            id: thinkingId,
+            type: "thinking" as const,
+            title: "Thought about it...",
+            timestamp: new Date()
+          }]
+        }));
+        
+        // After 2 seconds, add working activity
         setTimeout(() => {
-          set({ isTyping: true, isDemoMode: true });
+          const workingId = `activity-${Date.now() + 1}`;
+          set((state) => ({
+            activities: [...state.activities, {
+              id: workingId,
+              type: "working" as const,
+              title: "Setting up project...",
+              timestamp: new Date()
+            }]
+          }));
           
-          // Start activity demo
-          useActivityStore.getState().startDemo();
-          
-          // After 5 seconds, stop thinking and add response
+          // After 3 more seconds, complete first activity and add progress
           setTimeout(() => {
+            const completedId = `activity-${Date.now() + 2}`;
             set((state) => ({
-              isTyping: false,
-              isDemoMode: false,
-              messages: [...state.messages, {
-                id: Date.now().toString(),
-                conversationId: "default",
-                role: "assistant",
-                content: "I'm analyzing your request and setting up the development environment. Let me break this down into actionable steps and start implementing the solution.",
-                timestamp: new Date(),
-                metadata: {}
-              }]
+              activities: state.activities.map(a => 
+                a.id === workingId ? { ...a, type: "completed" as const, title: "Project setup complete" } : a
+              ).concat([{
+                id: completedId,
+                type: "progress" as const,
+                title: "Building components...",
+                progress: [
+                  { name: "authentication_setup", completed: true },
+                  { name: "dashboard_layout", completed: true },
+                  { name: "api_endpoints", completed: false },
+                  { name: "database_schema", completed: false }
+                ],
+                timestamp: new Date()
+              }])
             }));
-          }, 5000);
-        }, 100);
-      });
+            
+            // Add response after 2 more seconds
+            setTimeout(() => {
+              set((state) => ({
+                isTyping: false,
+                isDemoMode: false,
+                messages: [...state.messages, {
+                  id: Date.now().toString(),
+                  conversationId: "default",
+                  role: "assistant",
+                  content: "I'll create a comprehensive React dashboard with analytics charts, user management, and modern UI components.",
+                  timestamp: new Date(),
+                  metadata: {}
+                }]
+              }));
+            }, 2000);
+          }, 3000);
+        }, 2000);
+      }, 100);
       
       return state;
     }),

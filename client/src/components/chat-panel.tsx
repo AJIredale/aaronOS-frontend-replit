@@ -5,15 +5,15 @@ import { Button } from "@/components/ui/button";
 import CommandBar from "@/components/command-bar";
 import AaronIcon from "@/components/aaron-icon";
 import { useSocket } from "@/hooks/use-socket";
-import { useConversationStore } from "@/store/conversation";
+import { useConversationStore, type ActivityIndicator } from "@/store/conversation";
 import { useQuoteStore } from "@/store/quote";
 import { formatDistanceToNow } from "date-fns";
-import { Quote } from "lucide-react";
+import { Quote, Brain, Wrench, CheckCircle, Clock, ChevronRight } from "lucide-react";
 import aaronLogo from "@assets/Asset 14@4x_1754418674283.png";
 
 export default function ChatPanel() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { messages, isTyping, addMessage } = useConversationStore();
+  const { messages, activities, isTyping, addMessage } = useConversationStore();
   const { setQuote } = useQuoteStore();
   const { lastMessage } = useSocket();
   const [showQuoteButton, setShowQuoteButton] = useState(false);
@@ -140,6 +140,50 @@ export default function ChatPanel() {
                 >
                   <p className="whitespace-pre-wrap" style={{ fontSize: '15px', lineHeight: '1.5' }}>{message.content}</p>
                 </div>
+              </div>
+            </div>
+          ))}
+          
+          {/* Activity Indicators */}
+          {activities.map((activity) => (
+            <div key={activity.id} className="flex justify-start">
+              <div className={`mb-4 p-3 rounded-lg border max-w-md ${
+                activity.type === "thinking" ? "bg-purple-50 border-purple-200" :
+                activity.type === "working" ? "bg-orange-50 border-orange-200" :
+                activity.type === "completed" ? "bg-green-50 border-green-200" :
+                activity.type === "progress" ? "bg-blue-50 border-blue-200" :
+                "bg-gray-50 border-gray-200"
+              }`}>
+                <div className="flex items-center gap-2 mb-2">
+                  {activity.type === "thinking" && <Brain size={16} className="text-purple-500" />}
+                  {activity.type === "working" && <Clock size={16} className="text-orange-500 animate-pulse" />}
+                  {activity.type === "completed" && <CheckCircle size={16} className="text-green-500" />}
+                  {activity.type === "progress" && <Wrench size={16} className="text-blue-500" />}
+                  <span className="font-medium text-sm">{activity.title}</span>
+                  {activity.type !== "progress" && <ChevronRight size={14} className="text-gray-400" />}
+                </div>
+                
+                {activity.subtitle && (
+                  <p className="text-xs text-gray-600 mb-2">{activity.subtitle}</p>
+                )}
+                
+                {activity.progress && (
+                  <div className="space-y-1">
+                    {activity.progress.map((item, index) => (
+                      <div key={index} className="flex items-center gap-2 text-xs">
+                        {item.completed ? (
+                          <CheckCircle size={12} className="text-green-500" />
+                        ) : (
+                          <Clock size={12} className="text-gray-400" />
+                        )}
+                        <span className={item.completed ? "text-green-700" : "text-gray-600"}>
+                          {item.name.replace(/_/g, " ")}
+                        </span>
+                        <ChevronRight size={10} className="text-gray-400 ml-auto" />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}
