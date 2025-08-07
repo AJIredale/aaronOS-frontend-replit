@@ -70,7 +70,15 @@ export default function CommandBar() {
     if (!input.trim() || sendMessageMutation.isPending) return;
 
     const content = input.trim();
+    let messageContent = content;
+    
+    // If there's a quote, prepend it to the message
+    if (isQuoting && quotedText) {
+      messageContent = `> "${quotedText}"\n\n${content}`;
+    }
+    
     setInput("");
+    clearQuote(); // Clear the quote after sending
     
     // Handle slash commands
     if (content.startsWith("/")) {
@@ -78,12 +86,12 @@ export default function CommandBar() {
       return;
     }
 
-    // Add user message first
+    // Add user message first with quoted content
     addMessage({
       id: Date.now().toString(),
       conversationId: "default",
       role: "user",
-      content,
+      content: messageContent,
       timestamp: new Date(),
       metadata: {}
     });
