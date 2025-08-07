@@ -194,9 +194,23 @@ export default function CommandBar() {
       const minHeight = 36;
       const maxHeight = 200; // Max height for multiple lines
       
-      // Calculate required height based on scroll height
+      // Calculate the natural scroll height
       const scrollHeight = textarea.scrollHeight;
-      const newHeight = Math.max(minHeight, Math.min(scrollHeight, maxHeight));
+      
+      // Only expand if content actually requires more than one line
+      // Check if scrollHeight is significantly larger than minHeight (accounting for line-height)
+      const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight) || 20;
+      const singleLineHeight = minHeight;
+      const shouldExpand = scrollHeight > singleLineHeight + lineHeight * 0.5; // Some tolerance
+      
+      let newHeight;
+      if (!input.trim() || !shouldExpand) {
+        // Keep at minimum height if empty or content fits in one line
+        newHeight = minHeight;
+      } else {
+        // Expand to accommodate content
+        newHeight = Math.min(scrollHeight, maxHeight);
+      }
       
       textarea.style.height = newHeight + "px";
       
@@ -319,7 +333,8 @@ export default function CommandBar() {
                     fontSize: '0.95rem', 
                     lineHeight: '1.4',
                     height: '36px',
-                    padding: '0'
+                    padding: '0',
+                    verticalAlign: 'middle'
                   }}
                   disabled={sendMessageMutation.isPending}
                 />
