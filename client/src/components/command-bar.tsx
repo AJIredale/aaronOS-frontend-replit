@@ -197,7 +197,7 @@ export default function CommandBar() {
       <div className="max-w-[770px] mx-auto">
         {/* Quoted Content */}
         {isQuoting && quotedText && (
-          <div className="mb-4 p-3 bg-gray-50 border-l-4 border-gray-300 rounded-r-lg">
+          <div className="mb-4 p-3 bg-gray-50 border-l-4 border-gray-300 rounded-r-2xl">
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-2 flex-1">
                 <Quote size={14} className="text-gray-500 mt-0.5 flex-shrink-0" />
@@ -219,7 +219,7 @@ export default function CommandBar() {
         
         <form onSubmit={handleSubmit} className="relative">
           {showCommands && filteredCommands.length > 0 && (
-            <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+            <div className="absolute bottom-full left-0 right-0 mb-2 bg-white border border-gray-200 rounded-2xl shadow-lg z-10">
               {filteredCommands.map((cmd, index) => (
                 <div
                   key={cmd.command}
@@ -239,8 +239,8 @@ export default function CommandBar() {
             </div>
           )}
           
-          <div className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow focus-within:shadow-md focus-within:border-gray-200">
-            <div className="flex items-center p-4 min-h-[56px]">
+          <div className="relative bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-md transition-shadow focus-within:shadow-md focus-within:border-gray-200">
+            <div className="flex items-center px-4 py-2 min-h-[44px]">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -278,7 +278,8 @@ export default function CommandBar() {
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   placeholder="Message Aaron..."
-                  className="min-h-[24px] max-h-[120px] resize-none border-0 bg-transparent text-base p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
+                  className="min-h-[20px] max-h-[120px] resize-none border-0 bg-transparent p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
+                  style={{ fontSize: '0.95rem', lineHeight: '1.4' }}
                   disabled={sendMessageMutation.isPending}
                 />
               </div>
@@ -290,14 +291,14 @@ export default function CommandBar() {
                     onClick={toggleListening}
                     size="sm"
                     variant="ghost"
-                    className={`h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 ${
+                    className={`h-7 w-7 p-0 rounded-full transition-colors flex-shrink-0 ${
                       isListening 
                         ? "bg-red-500 hover:bg-red-600 text-white" 
                         : "hover:bg-gray-100 text-gray-500"
                     }`}
                   >
-                    {isListening ? <MicOff style={{width: "1.3rem", height: "1.3rem"}} /> : (
-                      <svg width="1.3rem" height="1.3rem" viewBox="0 0 24 24" fill="currentColor" style={{width: "1.3rem", height: "1.3rem"}}>
+                    {isListening ? <MicOff style={{width: "1.1rem", height: "1.1rem"}} /> : (
+                      <svg width="1.1rem" height="1.1rem" viewBox="0 0 24 24" fill="currentColor" style={{width: "1.1rem", height: "1.1rem"}}>
                         <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
                         <path d="M19 10v1a7 7 0 0 1-14 0v-1" fill="none" stroke="currentColor" strokeWidth="2"/>
                         <path d="M12 18v4" fill="none" stroke="currentColor" strokeWidth="2"/>
@@ -312,10 +313,10 @@ export default function CommandBar() {
                   <Button
                     type="submit"
                     size="sm"
-                    className="h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 bg-black hover:bg-gray-800 text-white"
+                    className="h-7 w-7 p-0 rounded-full transition-colors flex-shrink-0 bg-black hover:bg-gray-800 text-white"
                     disabled={sendMessageMutation.isPending}
                   >
-                    <Send size={16} />
+                    <Send size={13} />
                   </Button>
                 ) : (
                   recordingSupported && (
@@ -323,16 +324,16 @@ export default function CommandBar() {
                       type="button"
                       onClick={toggleRecording}
                       size="sm"
-                      className={`h-8 w-8 p-0 rounded-full transition-colors flex-shrink-0 ${
+                      className={`h-7 w-7 p-0 rounded-full transition-colors flex-shrink-0 ${
                         isRecording 
                           ? "bg-red-500 hover:bg-red-600 text-white" 
                           : "bg-gray-200 hover:bg-gray-300 text-gray-600"
                       }`}
                     >
                       {isRecording ? (
-                        <Square size={12} />
+                        <Square size={11} />
                       ) : (
-                        <svg width="1.3rem" height="1.3rem" viewBox="0 0 24 24" fill="currentColor" style={{width: "1.3rem", height: "1.3rem"}}>
+                        <svg width="1.1rem" height="1.1rem" viewBox="0 0 24 24" fill="currentColor" style={{width: "1.1rem", height: "1.1rem"}}>
                           <rect x="6" y="10" width="1.5" height="4" rx="0.75"/>
                           <rect x="9.25" y="8" width="1.5" height="8" rx="0.75"/>
                           <rect x="12.5" y="6" width="1.5" height="12" rx="0.75"/>

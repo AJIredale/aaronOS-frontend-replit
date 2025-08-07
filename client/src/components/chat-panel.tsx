@@ -84,7 +84,7 @@ export default function ChatPanel() {
       <div className="p-4 border-b border-gray-200 bg-white flex-shrink-0">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-base font-medium text-gray-900" style={{ fontSize: '15px' }}>Aaron</h2>
+            <h2 className="text-base font-medium text-gray-900" style={{ fontSize: '0.95rem' }}>Aaron</h2>
             <p className="text-xs text-gray-500">AI OS Agent</p>
           </div>
           <Button
@@ -127,7 +127,7 @@ export default function ChatPanel() {
                 )}
                 
                 <div
-                  className={`rounded-lg p-3 select-text ${
+                  className={`rounded-2xl p-3 select-text ${
                     message.role === "user"
                       ? "bg-[#f5f6f8] text-black"
                       : "bg-white text-black"
@@ -138,7 +138,7 @@ export default function ChatPanel() {
                     }
                   }}
                 >
-                  <p className="whitespace-pre-wrap" style={{ fontSize: '15px', lineHeight: '1.5' }}>{message.content}</p>
+                  <p className="whitespace-pre-wrap" style={{ fontSize: '0.95rem', lineHeight: '1.5' }}>{message.content}</p>
                 </div>
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function ChatPanel() {
           {/* Activity Indicators */}
           {activities.map((activity) => (
             <div key={activity.id} className="flex justify-start">
-              <div className={`mb-4 p-3 rounded-lg border max-w-md ${
+              <div className={`mb-4 p-3 rounded-2xl border max-w-md ${
                 activity.type === "thinking" ? "bg-purple-50 border-purple-200" :
                 activity.type === "working" ? "bg-orange-50 border-orange-200" :
                 activity.type === "completed" ? "bg-green-50 border-green-200" :
