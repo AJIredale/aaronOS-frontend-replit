@@ -200,10 +200,29 @@ export default function CommandBar() {
       
       textarea.style.height = newHeight + "px";
       
+      // Determine if single line or multiline for proper alignment
+      const isSingleLine = newHeight <= minHeight;
+      if (isSingleLine) {
+        textarea.classList.add('gpt-textarea-single-line');
+        textarea.style.paddingTop = '0';
+        textarea.style.paddingBottom = '0';
+      } else {
+        textarea.classList.remove('gpt-textarea-single-line');
+        textarea.style.paddingTop = '8px';
+        textarea.style.paddingBottom = '8px';
+      }
+      
+      // Enable/disable scrolling based on content height
+      if (scrollHeight > maxHeight) {
+        textarea.style.overflowY = 'auto';
+      } else {
+        textarea.style.overflowY = 'hidden';
+      }
+      
       // Update container height to match
       const container = textarea.closest('.flex.items-center');
       if (container) {
-        const containerHeight = Math.max(44, newHeight + 16); // Add padding
+        const containerHeight = Math.max(52, newHeight + 16); // Add padding
         container.style.minHeight = containerHeight + "px";
       }
     }
@@ -295,17 +314,18 @@ export default function CommandBar() {
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   placeholder="Message Aaron..."
-                  className="gpt-textarea min-h-[36px] max-h-[200px] resize-none border-0 bg-transparent p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full overflow-hidden"
+                  className="gpt-textarea gpt-textarea-single-line min-h-[36px] max-h-[200px] resize-none border-0 bg-transparent focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
                   style={{ 
                     fontSize: '0.95rem', 
                     lineHeight: '1.4',
-                    height: '36px'
+                    height: '36px',
+                    padding: '0'
                   }}
                   disabled={sendMessageMutation.isPending}
                 />
               </div>
               
-              <div className="flex items-center gap-2 ml-3">
+              <div className="flex items-end gap-2 ml-3">
                 {voiceSupported && (
                   <Button
                     type="button"

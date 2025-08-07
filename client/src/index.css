@@ -174,22 +174,41 @@
   border-radius: 2px;
 }
 
-/* GPT-style textarea placeholder centering */
+/* GPT-style textarea with proper scrolling and alignment */
 .gpt-textarea {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   min-height: 36px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .gpt-textarea::placeholder {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
   opacity: 0.6;
+  color: #9ca3af;
 }
 
 .gpt-textarea:focus::placeholder {
   opacity: 0.4;
+}
+
+/* Slim scrollbar for textarea when content exceeds max height */
+.gpt-textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+.gpt-textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gpt-textarea::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+.gpt-textarea::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* Ensure textarea content is properly aligned */
@@ -197,6 +216,14 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+/* Single line text centering */
+.gpt-textarea-single-line {
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
 }
 
 .slim-scrollbar::-webkit-scrollbar-thumb:hover {
