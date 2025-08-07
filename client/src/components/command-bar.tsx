@@ -187,8 +187,19 @@ export default function CommandBar() {
   useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
+      // Reset height to auto to get accurate scrollHeight
       textarea.style.height = "auto";
-      textarea.style.height = Math.min(textarea.scrollHeight, 120) + "px";
+      
+      // Calculate new height based on content, with GPT-like max height
+      const newHeight = Math.min(textarea.scrollHeight, 200); // Max ~8 lines like GPT
+      textarea.style.height = newHeight + "px";
+      
+      // Update the container min-height dynamically
+      const container = textarea.closest('[class*="min-h-"]');
+      if (container) {
+        const minHeight = Math.max(44, newHeight + 16); // 16px for padding
+        container.style.minHeight = minHeight + "px";
+      }
     }
   }, [input]);
 
@@ -239,8 +250,8 @@ export default function CommandBar() {
             </div>
           )}
           
-          <div className="relative bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-md transition-shadow focus-within:shadow-md focus-within:border-gray-200">
-            <div className="flex items-center px-4 py-2 min-h-[44px]">
+          <div className="relative bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-md transition-all duration-200 ease-out focus-within:shadow-md focus-within:border-gray-200">
+            <div className="flex items-center px-4 py-2 min-h-[44px] transition-all duration-200 ease-out">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -278,7 +289,7 @@ export default function CommandBar() {
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   placeholder="Message Aaron..."
-                  className="min-h-[20px] max-h-[120px] resize-none border-0 bg-transparent p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
+                  className="min-h-[20px] max-h-[200px] resize-none border-0 bg-transparent p-0 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full overflow-hidden"
                   style={{ fontSize: '0.95rem', lineHeight: '1.4' }}
                   disabled={sendMessageMutation.isPending}
                 />
