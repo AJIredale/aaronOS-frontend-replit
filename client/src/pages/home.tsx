@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Mic, Send, MicOff, Wand2 } from "lucide-react";
+import { Mic, Send, MicOff, Plus } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 import { useConversationStore } from "@/store/conversation";
 
@@ -93,54 +93,83 @@ export default function HomePage() {
             </h1>
           </div>
 
-          {/* Input Form - Copy exact styling from command-bar */}
+          {/* Input Form - Match exact GPT layout */}
           <form onSubmit={handleSubmit} className="relative">
-            <div className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow focus-within:shadow-md focus-within:border-gray-200">
-              <div className="flex items-center px-4 py-3 gap-3">
+            <div className="relative bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-md transition-all duration-200 ease-out focus-within:shadow-md focus-within:border-gray-200">
+              <div className="flex items-center px-4 py-2 min-h-[52px] transition-all duration-200 ease-out">
+                {/* Plus Button */}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 mr-3 hover:bg-gray-100 flex-shrink-0"
+                >
+                  <Plus size={16} className="text-gray-500" />
+                </Button>
+                
                 <Input
                   type="text"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Ask anything"
                   className="flex-1 border-0 bg-transparent text-base placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
-                  style={{ fontSize: '16px' }}
+                  style={{ 
+                    fontSize: '16px',
+                    lineHeight: '36px',
+                    height: '36px',
+                    padding: '0',
+                    verticalAlign: 'middle'
+                  }}
                 />
                 
-                {/* Tools Button */}
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="flex items-center gap-1 text-gray-500 hover:text-gray-700 h-8 px-2"
-                >
-                  <Wand2 size={16} />
-                  <span className="text-sm">Tools</span>
-                </Button>
-
-                {/* Divider */}
-                <div className="w-px h-6 bg-gray-200" />
-
-                {/* Voice Button */}
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={toggleVoice}
-                  className={`h-8 w-8 p-0 ${isListening ? 'text-red-500 hover:text-red-600' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                  {isListening ? <MicOff size={20} className="w-5 h-5" /> : <Mic size={20} className="w-5 h-5" />}
-                </Button>
-
-                {/* Send Button - Only show when there's text */}
-                {message.trim() && (
+                <div className="flex items-center gap-2 ml-3">
+                  {/* Microphone Button */}
                   <Button
-                    type="submit"
+                    type="button"
+                    onClick={toggleVoice}
                     size="sm"
-                    className="h-8 w-8 p-0 bg-gray-900 hover:bg-gray-800 text-white ml-1"
+                    variant="ghost"
+                    className={`h-7 w-7 p-0 rounded-full transition-colors flex-shrink-0 ${
+                      isListening 
+                        ? "bg-red-500 hover:bg-red-600 text-white" 
+                        : "hover:bg-gray-100 text-gray-500"
+                    }`}
                   >
-                    <Send size={16} />
+                    {isListening ? <MicOff style={{width: "1.1rem", height: "1.1rem"}} /> : (
+                      <svg width="1.1rem" height="1.1rem" viewBox="0 0 24 24" fill="currentColor" style={{width: "1.1rem", height: "1.1rem"}}>
+                        <path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                        <path d="M19 10v1a7 7 0 0 1-14 0v-1" fill="none" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M12 18v4" fill="none" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M8 22h8" fill="none" stroke="currentColor" strokeWidth="2"/>
+                      </svg>
+                    )}
                   </Button>
-                )}
+
+                  {/* Dynamic send/voice button like GPT */}
+                  {message.trim() ? (
+                    <Button
+                      type="submit"
+                      size="sm"
+                      className="h-7 w-7 p-0 bg-black hover:bg-gray-800 text-white rounded-full flex-shrink-0"
+                    >
+                      <Send size={14} />
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 w-7 p-0 rounded-full hover:bg-gray-100 text-gray-500 flex-shrink-0"
+                    >
+                      <svg width="1.1rem" height="1.1rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <rect x="7" y="7" width="3" height="3"/>
+                        <rect x="14" y="7" width="3" height="3"/>
+                        <rect x="7" y="14" width="10" height="3"/>
+                      </svg>
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           </form>

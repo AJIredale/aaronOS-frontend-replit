@@ -323,7 +323,7 @@ export default function CommandBar() {
                   value={input}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
-                  placeholder="Message Aaron..."
+                  placeholder="Ask anything"
                   className="gpt-textarea gpt-textarea-single-line min-h-[36px] max-h-[200px] resize-none border-0 bg-transparent focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
                   style={{ 
                     fontSize: '16px', 
