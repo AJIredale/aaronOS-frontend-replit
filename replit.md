@@ -33,6 +33,7 @@ Preferred communication style: Simple, everyday language.
 - **Command Interface**: Slash-command system with autocomplete for power-user interactions
 - **Voice Integration**: Dual voice functionality with microphone button for voice-to-text transcription and dynamic send/voice-note button that switches based on input state (like GPT)
 - **Responsive Design**: Mobile-first approach with desktop optimizations
+- **Input Component Consistency**: CRITICAL - Homepage and chat page inputs must always be identical. Any changes to input functionality must be applied to BOTH components simultaneously (see LOCKED_FUNCTIONALITY.md)
 
 ### Data Flow
 - **Message Handling**: Bidirectional flow between user input, API calls, and WebSocket streams

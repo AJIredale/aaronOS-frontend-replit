@@ -69,3 +69,17 @@ If modifications are absolutely necessary:
 4. Update this lock file with changes
 
 **WARNING**: This functionality has been specifically designed to match ChatGPT's interface patterns. Changes will break user experience consistency.
+
+### CRITICAL RULE: DUAL COMPONENT SYNC
+**BOTH** homepage (`client/src/pages/home.tsx`) and chat page (`client/src/components/command-bar.tsx`) input components MUST remain identical at all times.
+
+**REQUIREMENT**: Any changes to input functionality must be applied to BOTH components simultaneously:
+1. Update homepage input in `client/src/pages/home.tsx`
+2. Update chat page input in `client/src/components/command-bar.tsx`
+3. Verify both components have identical behavior and styling
+
+**COMPONENTS TO SYNC**:
+- Plus button dropdown functionality
+- Voice/send button behavior
+- Input styling and placeholder text
+- All interactive elements and their behavior
