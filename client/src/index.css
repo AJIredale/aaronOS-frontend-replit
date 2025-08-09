@@ -63,12 +63,12 @@
     font-size: 0.95rem;
   }
   
-  /* Override shadcn textarea sizing */
-  .gpt-textarea {
+  /* Override shadcn textarea sizing - higher specificity */
+  textarea.gpt-textarea {
     font-size: 16px !important;
   }
   
-  .gpt-textarea::placeholder {
+  textarea.gpt-textarea::placeholder {
     font-size: 16px !important;
   }
   
