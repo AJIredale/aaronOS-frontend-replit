@@ -234,11 +234,14 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  line-height: 36px;
 }
 
 .gpt-textarea-single-line::placeholder {
   line-height: 36px;
   vertical-align: middle;
+  position: relative;
+  top: 0;
 }
 
 .slim-scrollbar::-webkit-scrollbar-thumb:hover {

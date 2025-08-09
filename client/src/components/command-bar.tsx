@@ -331,7 +331,7 @@ export default function CommandBar() {
                   className="gpt-textarea gpt-textarea-single-line min-h-[36px] max-h-[200px] resize-none border-0 bg-transparent focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
                   style={{ 
                     fontSize: '16px', 
-                    lineHeight: '1.4',
+                    lineHeight: '36px',
                     height: '36px',
                     padding: '0',
                     verticalAlign: 'middle'
