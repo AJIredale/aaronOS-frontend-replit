@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { apiRequest } from "@/lib/api";
 import { useConversationStore } from "@/store/conversation";
 import { useQuoteStore } from "@/store/quote";
-import { Send, Plus, Paperclip, FileText, Image, Code, Database, Mic, MicOff, Square, X, Quote } from "lucide-react";
+import { Send, Plus, Paperclip, FileText, Image, Code, Database, Mic, MicOff, Square, X, Quote, ArrowUp, Lightbulb, MoreHorizontal, Wand2 } from "lucide-react";
 import { useVoiceInput } from "@/hooks/use-voice-input";
 import { useVoiceRecording } from "@/hooks/use-voice-recording";
 
@@ -297,22 +297,34 @@ export default function CommandBar() {
                     <Plus size={16} className="text-gray-500" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-56">
+                <DropdownMenuContent align="start" className="w-64">
                   <DropdownMenuItem>
-                    <Paperclip className="mr-2 h-4 w-4" />
-                    <span>Add file</span>
+                    <Paperclip className="mr-3 h-4 w-4" />
+                    <span>Add photos & files</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Image className="mr-2 h-4 w-4" />
-                    <span>Add image</span>
+                    <Wand2 className="mr-3 h-4 w-4" />
+                    <span>Agent mode</span>
+                    <span className="ml-auto text-xs bg-gray-100 px-2 py-1 rounded">NEW</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Code className="mr-2 h-4 w-4" />
-                    <span>Add code snippet</span>
+                    <Database className="mr-3 h-4 w-4" />
+                    <span>Deep research</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Database className="mr-2 h-4 w-4" />
-                    <span>Connect data source</span>
+                    <Image className="mr-3 h-4 w-4" />
+                    <span>Create image</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Lightbulb className="mr-3 h-4 w-4" />
+                    <span>Think longer</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <MoreHorizontal className="mr-3 h-4 w-4" />
+                    <span>More</span>
+                    <svg className="ml-auto h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z"/>
+                    </svg>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -360,7 +372,7 @@ export default function CommandBar() {
                   </Button>
                 )}
                 
-                {/* Dynamic send/voice button like GPT */}
+                {/* Dynamic send/voice button - LOCKED FUNCTIONALITY */}
                 {input.trim() ? (
                   <Button
                     type="submit"
@@ -368,7 +380,7 @@ export default function CommandBar() {
                     className="h-7 w-7 p-0 rounded-full transition-colors flex-shrink-0 bg-black hover:bg-gray-800 text-white"
                     disabled={sendMessageMutation.isPending}
                   >
-                    <Send size={13} />
+                    <ArrowUp size={13} />
                   </Button>
                 ) : (
                   recordingSupported && (

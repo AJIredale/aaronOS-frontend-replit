@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Mic, Send, MicOff, Plus } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Mic, Send, MicOff, Plus, Paperclip, Image, Code, Database, Lightbulb, MoreHorizontal, ArrowUp, Wand2 } from "lucide-react";
 import Sidebar from "@/components/sidebar";
 import { useConversationStore } from "@/store/conversation";
 
@@ -97,15 +98,49 @@ export default function HomePage() {
           <form onSubmit={handleSubmit} className="relative">
             <div className="relative bg-white border border-gray-200 rounded-3xl shadow-sm hover:shadow-md transition-all duration-200 ease-out focus-within:shadow-md focus-within:border-gray-200">
               <div className="flex items-center px-4 py-2 min-h-[52px] transition-all duration-200 ease-out">
-                {/* Plus Button */}
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 mr-3 hover:bg-gray-100 flex-shrink-0"
-                >
-                  <Plus size={16} className="text-gray-500" />
-                </Button>
+                {/* Plus Button with Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0 mr-3 hover:bg-gray-100 flex-shrink-0"
+                    >
+                      <Plus size={16} className="text-gray-500" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-64">
+                    <DropdownMenuItem>
+                      <Paperclip className="mr-3 h-4 w-4" />
+                      <span>Add photos & files</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Wand2 className="mr-3 h-4 w-4" />
+                      <span>Agent mode</span>
+                      <span className="ml-auto text-xs bg-gray-100 px-2 py-1 rounded">NEW</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Database className="mr-3 h-4 w-4" />
+                      <span>Deep research</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Image className="mr-3 h-4 w-4" />
+                      <span>Create image</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Lightbulb className="mr-3 h-4 w-4" />
+                      <span>Think longer</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <MoreHorizontal className="mr-3 h-4 w-4" />
+                      <span>More</span>
+                      <svg className="ml-auto h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6l6 6-6 6-1.41-1.41z"/>
+                      </svg>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 
                 <Input
                   type="text"
@@ -145,14 +180,14 @@ export default function HomePage() {
                     )}
                   </Button>
 
-                  {/* Dynamic send/voice button like GPT */}
+                  {/* Dynamic send/voice button - LOCKED FUNCTIONALITY */}
                   {message.trim() ? (
                     <Button
                       type="submit"
                       size="sm"
                       className="h-7 w-7 p-0 bg-black hover:bg-gray-800 text-white rounded-full flex-shrink-0"
                     >
-                      <Send size={14} />
+                      <ArrowUp size={14} />
                     </Button>
                   ) : (
                     <Button
