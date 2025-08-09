@@ -98,7 +98,7 @@ export default function Sidebar() {
             src={aaronOSLogo} 
             alt="AaronOS" 
             className="h-6 w-auto"
-            style={{ height: "1.8rem", width: "auto" }}
+            style={{ height: "1.5rem", width: "auto" }}
           />
         </Link>
       </div>
