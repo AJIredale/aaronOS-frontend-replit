@@ -242,14 +242,14 @@ export default function ActivityPanel() {
           </Button>
           {isTaskQueueOpen && (
             <div className="mt-3">
-              <div className="space-y-3 max-h-64 overflow-y-auto">
+              <div className="space-y-0 max-h-64 overflow-y-auto">
                 {taskQueue.length === 0 ? (
                   <div className="text-center py-4 text-gray-500 text-sm">
                     No tasks in queue
                   </div>
                 ) : (
                   taskQueue.map((task) => (
-                    <div key={task.id} className="flex items-center gap-3 text-sm">
+                    <div key={task.id} className="flex items-center gap-3 px-3 py-2" style={{ fontSize: '0.775rem' }}>
                       <div className="flex-shrink-0 w-4 h-4 flex items-center justify-center">
                         {getTaskStatusIcon(task.status)}
                       </div>
@@ -277,9 +277,9 @@ export default function ActivityPanel() {
           </Button>
           {isActionsOpen && (
             <div className="mt-3">
-              <div className="space-y-3">
+              <div className="space-y-0">
                 {actions.map((action, index) => (
-                  <div key={index} className="flex items-center gap-3 text-sm">
+                  <div key={index} className="flex items-center gap-3 px-3 py-2" style={{ fontSize: '0.775rem' }}>
                     <div className="flex-shrink-0 w-4 h-4 flex items-center justify-center">
                       {action.status === 'completed' && <Check size={16} className="text-green-500" />}
                       {action.status === 'in-progress' && <Loader2 size={16} className="text-blue-500 animate-spin" />}
