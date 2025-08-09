@@ -103,6 +103,7 @@ export default function HomePage() {
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Ask anything"
                   className="flex-1 border-0 bg-transparent text-base placeholder:text-gray-400 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  style={{ fontSize: '16px' }}
                 />
                 
                 {/* Tools Button */}

@@ -233,12 +233,8 @@ export default function CommandBar() {
         textarea.style.overflowY = 'hidden';
       }
       
-      // Update container height to match
-      const container = textarea.closest('.flex.items-center');
-      if (container) {
-        const containerHeight = Math.max(52, newHeight + 16); // Add padding
-        container.style.minHeight = containerHeight + "px";
-      }
+      // Don't update container height to prevent floating
+      // The container should maintain its fixed height
     }
   }, [input]);
 
