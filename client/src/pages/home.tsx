@@ -193,14 +193,13 @@ export default function HomePage() {
                     <Button
                       type="button"
                       size="sm"
-                      variant="ghost"
-                      className="h-7 w-7 p-0 rounded-full hover:bg-gray-100 text-gray-500 flex-shrink-0"
+                      className="h-7 w-7 p-0 rounded-full transition-colors flex-shrink-0 bg-gray-200 hover:bg-gray-300 text-gray-600"
                     >
-                      <svg width="1.1rem" height="1.1rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <rect x="7" y="7" width="3" height="3"/>
-                        <rect x="14" y="7" width="3" height="3"/>
-                        <rect x="7" y="14" width="10" height="3"/>
+                      <svg width="1.1rem" height="1.1rem" viewBox="0 0 24 24" fill="currentColor" style={{width: "1.1rem", height: "1.1rem"}}>
+                        <rect x="6" y="10" width="1.5" height="4" rx="0.75"/>
+                        <rect x="9.25" y="8" width="1.5" height="8" rx="0.75"/>
+                        <rect x="12.5" y="6" width="1.5" height="12" rx="0.75"/>
+                        <rect x="15.75" y="8" width="1.5" height="8" rx="0.75"/>
                       </svg>
                     </Button>
                   )}
